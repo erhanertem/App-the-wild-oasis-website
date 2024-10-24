@@ -1,5 +1,5 @@
 function Page() {
-  return <h1>Hello Next!</h1>;
+  return <h1>Cabins page</h1>;
 }
 
 export default Page;
