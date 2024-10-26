@@ -16,6 +16,9 @@
 - Navigation in nextjs
 - React server component (RSC) architecture
 
+  - Data fetching @ RSC
+  - Sharing fetched data between a RSC and CSC
+
   </details>
 
 &emsp;
