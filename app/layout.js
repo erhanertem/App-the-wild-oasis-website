@@ -1,3 +1,4 @@
+import Logo from "./components/Logo";
 import Navigation from "./components/Navigation";
 
 export const metadata = {
@@ -5,14 +6,21 @@ export const metadata = {
   description: "Discover luxury cabins in our beautiful and serene paradise.",
   keywords: "luxury cabins, paradise, vacation rentals, travel",
   author: "Erhan Ertem",
-  viewport: "width=device-width, initial-scale=1",
 };
+
+// export const viewport: Viewport = {
+//   width: "device-width",
+//   "initial-scale": 1,
+// };
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body>
-        <Navigation />
+        <header>
+          <Logo />
+          <Navigation />
+        </header>
         <main>{children}</main>
         <footer>Copyright by The Wild Oasis</footer>
       </body>
