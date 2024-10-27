@@ -1,3 +1,8 @@
+// OVERRIDE METADATA FROM THE ROOTLAYOUT
+export const metadata = {
+  title: "Guest area",
+};
+
 function Page() {
   return (
     <div>
