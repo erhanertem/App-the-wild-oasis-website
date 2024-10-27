@@ -4,7 +4,7 @@
 
 ## Udemy The Ultimate React Course 2024: React, Redux & More by Jonas Schmedtmann
 
-### **Objective:** Create the Wild Oasis App for Internal Company Operations
+### **Objective:** Create the Wild Oasis Website for Customers
 
 <details open>
 
