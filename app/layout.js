@@ -9,6 +9,7 @@ const josefin = Josefin_Sans({
 // console.log(josefin); // Look out for log @ server side and note that the josefin object is comprised of { className, fontFamily, fontStyle }
 // IMPORT TAILWIND CSS
 import "@/app/_styles/globals.css";
+import Header from "./_components/Header";
 
 export const metadata = {
   // title: "The Wild Oasis - Luxury Cabins in Paradise",
@@ -31,14 +32,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${josefin.className} min-h-screen bg-primary-950 text-primary-100`}
+        className={`${josefin.className} flex min-h-screen flex-col bg-primary-950 text-primary-100 antialiased`}
       >
-        <header>
-          <Logo />
-          <Navigation />
-        </header>
-        <main>{children}</main>
-        <footer>Copyright by The Wild Oasis</footer>
+        <Header />
+
+        <div className="flex-1 px-8 py-12">
+          <main className="mx-auto max-w-7xl bg-red-500">{children}</main>
+        </div>
       </body>
     </html>
   );
