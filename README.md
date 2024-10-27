@@ -32,8 +32,7 @@ addition to the project cirriculum:</strong>
 
   &emsp;
 
-<img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/report.gif" width="30px"/>
-<strong>Pending Issues:</strong>
+<img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/report.gif" width="30px"/><strong>Pending Issues:</strong>
 
 - N/A
 
