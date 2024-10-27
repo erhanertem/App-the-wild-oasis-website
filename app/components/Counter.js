@@ -10,7 +10,9 @@ function Counter({ users }) {
   return (
     <>
       <p>There are {users.length} users</p>
-      <button onClick={() => setCount((curr) => curr + 1)}>{count}</button>;
+      <button onClick={() => setCount((curr) => curr + 1)}>{count}</button>
+      <br />
+      <br />
     </>
   );
 }
