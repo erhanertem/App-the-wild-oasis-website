@@ -3,10 +3,10 @@ import Link from "next/link";
 
 function Logo() {
   return (
-    <Link href='/' className='flex items-center gap-4 z-10'>
+    <Link href="/" className="z-10 flex items-center gap-4">
       {/* src attr uses anything from public folder just like vite */}
-      <Image src='/logo.png' height='60' width='60' alt='The Wild Oasis logo' />
-      <span className='text-xl font-semibold text-primary-100'>
+      <Image src="/logo.png" height="60" width="60" alt="The Wild Oasis logo" />
+      <span className="text-xl font-semibold text-primary-100">
         The Wild Oasis
       </span>
     </Link>
