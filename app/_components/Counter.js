@@ -11,8 +11,6 @@ function Counter({ users }) {
     <>
       <p>There are {users.length} users</p>
       <button onClick={() => setCount((curr) => curr + 1)}>{count}</button>
-      <br />
-      <br />
     </>
   );
 }

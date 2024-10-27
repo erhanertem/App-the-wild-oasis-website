@@ -17,7 +17,8 @@
 - React server component (RSC) architecture
 
   - Data fetching @ RSC
-  - Sharing fetched data between a RSC and CSC
+  - Sharing fetched data between a SSC and CSC
+  - Establish a global loader for SSC pages
 
   </details>
 
