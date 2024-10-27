@@ -1,0 +1,1 @@
+By community convention, any shared folder under app which shouldn't be regarded as a route/page, is prefixed with _ to mark it private. So no route will be created by NextJS for this folder.

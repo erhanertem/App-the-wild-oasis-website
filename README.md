@@ -11,9 +11,10 @@
 <summary><img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/education.gif" width="30px"/><strong>Key take-aways from this project...</strong></summary>
 
 - <strong>'App'</strong> based NextJS folder structure and project planning
-  - Creating routes
-  - Create a nextjs root layout
-- Navigation in nextjs
+  - Setup path alias for app folder
+  - Creating NextJS routes
+  - Create a NextJS root layout
+- Navigation in NextJS
 - React server component (RSC) architecture
 
   - Data fetching @ RSC
