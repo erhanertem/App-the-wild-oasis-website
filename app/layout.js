@@ -5,15 +5,20 @@ import Navigation from "@/app/_components/Navigation";
 import "@/app/_styles/globals.css";
 
 export const metadata = {
-  title: "The Wild Oasis - Luxury Cabins in Paradise",
+  // title: "The Wild Oasis - Luxury Cabins in Paradise",
+  title: {
+    template: "%s | The Wild Oasis", //Prints the other routes with their title name (%s) + this content
+    default: "Welcome | The Wild Oasis - Luxury Cabins in Paradise",
+  },
   description: "Discover luxury cabins in our beautiful and serene paradise.",
   keywords: "luxury cabins, paradise, vacation rentals, travel",
   author: "Erhan Ertem",
 };
 
-// export const viewport: Viewport = {
+// // COMPLETED AUTOMATICALLY AND NOT NEEDED
+// export const viewport = {
 //   width: "device-width",
-//   "initial-scale": 1,
+//   initialScale: 1,
 // };
 
 export default function RootLayout({ children }) {
