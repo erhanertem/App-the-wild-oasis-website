@@ -1,6 +1,12 @@
 import Logo from "@/app/_components/Logo";
 import Navigation from "@/app/_components/Navigation";
 
+import { Josefin_Sans } from "next/font/google";
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
+// console.log(josefin); // Look out for log @ server side and note that the josefin object is comprised of { className, fontFamily, fontStyle }
 // IMPORT TAILWIND CSS
 import "@/app/_styles/globals.css";
 
@@ -24,7 +30,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-primary-950 text-primary-100">
+      <body
+        className={`${josefin.className} min-h-screen bg-primary-950 text-primary-100`}
+      >
         <header>
           <Logo />
           <Navigation />
