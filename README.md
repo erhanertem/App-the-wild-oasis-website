@@ -4,7 +4,7 @@
 
 ## Udemy The Ultimate React Course 2024: React, Redux & More by Jonas Schmedtmann
 
-### **Objective:** Create the Wild Oasis App for Internal Company Operations
+### **Objective:** Create the Wild Oasis Website for Customers
 
 <details open>
 
@@ -32,8 +32,7 @@ addition to the project cirriculum:</strong>
 
   &emsp;
 
-<img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/report.gif" width="30px"/>
-<strong>Pending Issues:</strong>
+<img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/report.gif" width="30px"/><strong>Pending Issues:</strong>
 
 - N/A
 
