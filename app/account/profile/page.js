@@ -2,7 +2,7 @@ import SelectCountry from "@/app/_components/SelectCountry";
 
 // OVERRIDE METADATA FROM THE ROOTLAYOUT
 export const metadata = {
-  title: "Profile",
+  title: "Update profile",
 };
 
 export default function Page() {
