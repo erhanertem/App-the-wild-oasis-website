@@ -9,6 +9,7 @@ export default function Page() {
         src={bg}
         fill // Next.js Image component API: stretch image full
         placeholder="blur" // Next.js Image component API: Image gets blurred till its fully downloaded
+        quality={80} // degregards the quality of image by instant resizing
         className="object-cover object-top" // Preserve aspect ratio thru tailwind while the image is forced to fill its container - in order to avoid image jumping around while resizing, we use object-top to begin scaling image from top.
         alt="Mountains and forests with two cabins"
       />

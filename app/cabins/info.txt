@@ -1,2 +1,2 @@
 Each route(page) bears its own folder
-Each folder by convention has to have a master file called page.js
+Each folder by convention has to have a route file called page.js
