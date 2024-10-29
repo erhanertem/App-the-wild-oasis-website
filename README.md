@@ -10,23 +10,39 @@
 
 <summary><img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/education.gif" width="30px"/><strong>Key take-aways from this project...</strong></summary>
 
-- <strong>'App'</strong> based NextJS folder structure and project planning
-  - Configure path alias for app folder / VSCODE auto import integration
-  - Creating NextJS routes(segments, pages)
-  - Create a NextJS root layout
-  - Create a NextJS layout in a nested route
-- Navigation in NextJS
-  - NextJS Link Component
-- Image handling in NextJS and relavant attributes
-  - NextJS Image Component
-    - Inline referencing
-      - Configure NextJS for URL images
-    - External referencing
 - React server component (RSC) architecture
 
   - Data fetching @ RSC
   - Sharing fetched data between a SSC and CSC
-  - Establish a global loader for SSC pages/segments
+
+- <strong>'App'</strong> based NextJS folder structure and project planning
+
+  - Root Segment
+    - Create NextJS root (entry page/root segment)
+    - Create a NextJS root layout
+  - Child Segments
+    - Create NextJS routes/nested routes (pages/segments)
+    - Create a NextJS layout in a nested route
+
+- Import handling in NextJS
+
+  - Configure path alias for app folder / VSCODE auto import integration
+
+- Navigation in NextJS
+
+  - NextJS Link Component
+
+- Image handling in NextJS and relavant attributes
+
+  - NextJS Image Component
+    - Inline referencing
+      - Configure NextJS for URL images
+    - External referencing
+
+- Loader handling in NextJS
+
+  - Establish a global loader for SSC routes (pages/segments)
+  - Establish custom loader @ segment level (segment and its nested routes)
 
   </details>
 
