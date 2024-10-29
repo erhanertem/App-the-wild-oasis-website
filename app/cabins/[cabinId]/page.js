@@ -21,6 +21,8 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   // console.log(params.cabinId);
   const { cabinId } = await params;
+  // // ERROR BOUNDARY TESTER
+  // const { cabinIds } = await params;
   const cabin = await getCabin(cabinId);
 
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
