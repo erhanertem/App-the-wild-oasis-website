@@ -20,11 +20,13 @@
   - Root Segment
     - Create NextJS root (entry page/root segment)
     - Create a NextJS root layout
-  - Child Segments
+  - Child/Nested Child Segments
     - Create NextJS routes/nested routes (pages/segments)
     - Create a NextJS layout in a nested route
+  - Params Segments
+    - Setup params page
 
-- Import handling in NextJS
+- Component import handling in NextJS
 
   - Configure path alias for app folder / VSCODE auto import integration
 
@@ -43,6 +45,7 @@
 
   - Establish a global loader for SSC routes (pages/segments)
   - Establish custom loader @ segment level (segment and its nested routes)
+  - Employ <strong>React Suspense Mechanism</strong> on code portions that is subject to extended loading times to improve UX.
 
   </details>
 
