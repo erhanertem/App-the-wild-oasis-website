@@ -47,6 +47,13 @@
   - Establish custom loader @ segment level (segment and its nested routes)
   - Employ <strong>React Suspense Mechanism</strong> on code portions that is subject to extended loading times to improve UX.
 
+- Error handling in NextJS
+
+  - Setup global NextJS error boundary to prevent page breaks on erronous code in production
+  - Setup automatic triggering global NextJS not-found-error handling for mistyped routes/segments
+  - Setup manual triggering not-found-error handling for mistyped dynamic routes(params)
+  - Setup segment level NextJS not-found-error handlers
+
   </details>
 
 &emsp;
