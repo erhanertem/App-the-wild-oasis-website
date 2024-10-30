@@ -23,8 +23,10 @@
   - Child/Nested Child Segments
     - Create NextJS routes/nested routes (pages/segments)
     - Create a NextJS layout in a nested route
-  - Params Segments
+  - Params/Dynamic Segments
     - Setup params page
+    - Create dynamic metadata via generateMetaData() nextjs fn
+    - Turn fetched list of dynamic routes to static routes using generateStaticParams() nextjs fn
 
 - Component import handling in NextJS
 
