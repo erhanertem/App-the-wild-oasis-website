@@ -22,15 +22,15 @@ export async function generateMetadata({ params }) {
 1.	This is especially useful when you have a known set of routes at build time (e.g., specific cabin IDs) and want to generate static pages for each one.
 2.	It optimizes performance because the pages are pre-generated and do not require a server request when accessed.
  */
-export async function generateStaticParams() {
-  const cabins = await getCabins();
-  // console.log(cabins);
-  const idsArr = cabins.map((cabin) => ({
-    cabinId: String(cabin.id),
-  }));
-  // console.log(idsArr);
-  return idsArr;
-}
+// export async function generateStaticParams() {
+//   const cabins = await getCabins();
+//   // console.log(cabins);
+//   const idsArr = cabins.map((cabin) => ({
+//     cabinId: String(cabin.id),
+//   }));
+//   // console.log(idsArr);
+//   return idsArr;
+// }
 
 // EACH PAGE UNDER [...] FOLDER, RECEIVES A PARAMS PROP ex: @URL req as cabins/78 for a [cabinId] folder params returns {cabinId=78} object
 export default async function Page({ params }) {
