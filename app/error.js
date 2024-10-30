@@ -1,3 +1,4 @@
+// In Next.js, Error Boundaries need to be marked with "use client" because they require access to React’s error-handling capabilities on the client side, which involve interacting directly with the component tree and client state management.
 "use client";
 
 export default function Error({ error, reset }) {
