@@ -11,6 +11,9 @@ const nextConfig = {
     ],
   },
   // output: "export", // Required for SSG
+  // experimental: {
+  //   ppr: "incremental",
+  // }, // Required for PPR w/Canary NextJS version
 };
 
 export default nextConfig;
