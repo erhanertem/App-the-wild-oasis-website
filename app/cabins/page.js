@@ -2,11 +2,11 @@ import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
 import { Suspense } from "react";
 
-// > ROUTE LEVEL REVALIDATION
-// // ENFORCE DR
-// export const revalidate = 0;
-// // ENFORCE SSG+ISR
-export const revalidate = 15;
+// // > ROUTE LEVEL REVALIDATION
+// // // ENFORCE DR
+// // export const revalidate = 0;
+// // // ENFORCE SSG+ISR
+// export const revalidate = 15;
 
 // OVERRIDE METADATA FROM THE ROOTLAYOUT
 export const metadata = {

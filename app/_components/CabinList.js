@@ -1,7 +1,12 @@
 import CabinCard from "@/app/_components/CabinCard";
 import { getCabins } from "@/app/_lib/data-service";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function CabinList() {
+  // COMPONENT LEVEL REVALIDATION
+  // ENFORCE DR
+  noStore();
+
   const cabins = await getCabins();
   // GUARD CLAUSE
   if (!cabins.length) return null;
