@@ -19,7 +19,8 @@ function TextExpander({ children }) {
       >
         {isExpanded ? "Show less" : "Show more"}
       </button>
-      <Logo />
+      {/* TESTING A SC TURN INTO CC IN A USE CLIENT BOUNDARY */}
+      {/* <Logo /> */}
     </span>
   );
 }
