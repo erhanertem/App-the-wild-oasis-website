@@ -6,7 +6,7 @@ import { Suspense } from "react";
 // // // ENFORCE DR
 // // export const revalidate = 0;
 // // // ENFORCE SSG+ISR
-// export const revalidate = 15;
+export const revalidate = 15;
 
 // OVERRIDE METADATA FROM THE ROOTLAYOUT
 export const metadata = {

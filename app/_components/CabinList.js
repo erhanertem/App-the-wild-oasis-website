@@ -5,7 +5,7 @@ import { unstable_noStore as noStore } from "next/cache";
 export default async function CabinList() {
   // COMPONENT LEVEL REVALIDATION
   // ENFORCE DR
-  noStore();
+  // noStore();
 
   const cabins = await getCabins();
   // GUARD CLAUSE
