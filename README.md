@@ -13,7 +13,10 @@
 - React server component (RSC) architecture
 
   - Data fetching @ RSC
-  - Sharing fetched data between a SSC and CSC
+  - Share fetched data between a server-component(SC) and client-component(CC)
+  - Use CC in a SC
+    - Use 'use client' directive in CC when CC passes a server boundary
+  - Use SC in a CC
 
 - <strong>'App'</strong> based NextJS folder structure and project planning
 
@@ -24,9 +27,9 @@
     - Create NextJS routes/nested routes (pages/segments)
     - Create a NextJS layout in a nested route
   - Params/Dynamic Segments
-    - Setup params page
+    - Setup params route
     - Create dynamic metadata via generateMetaData() nextjs fn
-    - Turn fetched list of dynamic routes to static routes using generateStaticParams() nextjs fn
+    - Turn dynamic params routes to static routes using generateStaticParams() nextjs fn
 
 - Component import handling in NextJS
 
@@ -35,6 +38,9 @@
 - Navigation in NextJS
 
   - NextJS Link Component
+    - Static routes
+    - Dynamic params routes
+  - usePathname() NextJS CC hook to read current URL
 
 - Image handling in NextJS and relavant attributes
 
@@ -55,6 +61,15 @@
   - Setup automatic triggering global NextJS not-found-error handling for mistyped routes/segments
   - Setup manual triggering not-found-error handling for mistyped dynamic routes(params)
   - Setup segment level NextJS not-found-error handlers
+
+- Revalidation handling
+
+  - Component level revalidation
+    - noStore() for PPR (future)
+  - Route level revalidation
+    - revalidate object
+      - Enforce SSG+ISR rendering strategy
+      - Enforce dynamic rendering strategy
 
   </details>
 

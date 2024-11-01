@@ -1,7 +1,7 @@
 // MAKES IT CC SO THAT WE CAN USE USESTATE WHICH IS EXCLUSIVE TO CLIENT SIDE REACT
 "use client";
 
-import Logo from "@/app/_components/Logo";
+// import Logo from "@/app/_components/Logo";
 import { useState } from "react";
 
 function TextExpander({ children }) {
