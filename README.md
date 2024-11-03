@@ -12,8 +12,15 @@
 
 - React server component (RSC) architecture
 
-  - Data fetching @ RSC
-  - Share fetched data between a server-component(SC) and client-component(CC)
+  - Sharing data @ RSC
+    - Server-component(SC) to Client-component(CC) flow
+      - Passing fetched data from via propping
+      - Using children propping
+    - Client-component(CC) to Server-component(SC) flow
+      - Sharing filter state via URL (searchParams)
+        - usePathname() hook
+        - useSearchParams() hook
+        - useRouter() hook
   - Use CC in a SC
     - Use 'use client' directive in CC when CC passes a server boundary
   - Use SC in a CC
@@ -54,6 +61,7 @@
   - Establish a global loader for SSC routes (pages/segments)
   - Establish custom loader @ segment level (segment and its nested routes)
   - Employ <strong>React Suspense Mechanism</strong> on code portions that is subject to extended loading times to improve UX.
+    - key propping @ Suspense
 
 - Error handling in NextJS
 

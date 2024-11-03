@@ -1,19 +1,29 @@
-import CabinList from "@/app/_components/CabinList";
-import Spinner from "@/app/_components/Spinner";
 import { Suspense } from "react";
+
+import CabinList from "@/app/_components/CabinList";
+import Filter from "@/app/_components/Filter";
+import Spinner from "@/app/_components/Spinner";
 
 // // > ROUTE LEVEL REVALIDATION
 // // // ENFORCE DR
 // // export const revalidate = 0;
 // // // ENFORCE SSG+ISR
-export const revalidate = 15;
+// export const revalidate = 15;
 
 // OVERRIDE METADATA FROM THE ROOTLAYOUT
 export const metadata = {
   title: "Cabins",
 };
 
-export default async function Page() {
+// NOTE: HAVING SEARCHPARAMS PROP OVERRIDES EXPLICIT REVALIDATION AS THE COMPONENT IS FULLY DYNAMICALLY RENDERED SC
+export default async function Page({ searchParams }) {
+  //  PAGE.JS PICKS UP THE SEARFCH PARAMS VALUE CHANGED BY FILTER CC COMPONENT
+  const data = await searchParams;
+  // console.log(data);
+  // DESIGNATE A DEFAULT FALLBACK PARAM VALUE IF NONE PROVIDED
+  const filter = data.capacity ?? "all";
+  // console.log(filter);
+
   return (
     <div>
       <h1 className="mb-5 text-4xl font-medium text-accent-400">
@@ -28,19 +38,18 @@ export default async function Page() {
         to paradise.
       </p>
 
+      {/* CLIENT COMPONENT */}
+      <div className="mb-8 flex justify-end">
+        {/* MODIFIES SEARCH PARAMS VALUE @ URL */}
+        <Filter />
+      </div>
+
       {/* SUSPENSE APPLIED CODE */}
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner />} key={filter}>
+        {/* NOTE: key prop @ suspense allow us to show the Spinner fallback eachtime we load the cabinlist based on a new filter value. Otherwise, Suspense cant differentiate Suspenses and only one the loader will be displayed and later won't come out */}
         {/* FOR SUSPENSE WE MOVED ALL THE FETCHING DATA BUSINESS INTO ITS OWN COMPONENT WHERE THE CONTENT SUBJECT TO SUSPENSE IS CONTAINED */}
-        <CabinList />
+        <CabinList filter={filter} />
       </Suspense>
-      {/* PRE-SUSPENSE CODE */}
-      {/* {cabins.length > 0 && (
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:gap-12 xl:gap-14">
-          {cabins.map((cabin) => (
-            <CabinCard cabin={cabin} key={cabin.id} />
-          ))}
-        </div>
-      )} */}
     </div>
   );
 }
