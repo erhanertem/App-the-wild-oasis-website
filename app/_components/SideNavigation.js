@@ -28,7 +28,7 @@ const navLinks = [
 ];
 
 function SideNavigation() {
-  // NOTE: usePathname is a NextJS CC exclusive hook yielding current visited URL path similar to TQ useNavigation() hook - requires use client directive to make component CC
+  // NOTE: usePathname is a NextJS CC exclusive hook yielding current visited URL path similar to RR useLocation() hook- requires use client directive to make component CC
   const pathname = usePathname();
   // console.log(pathname);
 
