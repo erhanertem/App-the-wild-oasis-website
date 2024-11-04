@@ -30,9 +30,14 @@ function DateSelector({ settings, bookedDates, cabin }) {
         mode="range"
         min={minBookingLength + 1}
         max={maxBookingLength}
-        fromMonth={new Date()}
-        fromDate={new Date()}
-        toYear={new Date().getFullYear() + 5}
+        // OLD API
+        // fromMonth={new Date()}
+        // fromDate={new Date()}
+        // toYear={new Date().getFullYear() + 5}
+        // BASED ON NEW API
+        startMonth={new Date(2020, 6)}
+        startDate={new Date()}
+        endMonth={new Date(new Date().getFullYear() + 5, 11)} // December of the year 5 years from now
         captionLayout="dropdown"
         numberOfMonths={2}
       />
