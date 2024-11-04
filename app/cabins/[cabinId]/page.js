@@ -1,7 +1,11 @@
-import TextExpander from "@/app/_components/TextExpander";
-import { getCabin, getCabins } from "@/app/_lib/data-service";
-import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { Suspense } from "react";
 import Image from "next/image";
+import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
+
+import { getCabin, getCabins } from "@/app/_lib/data-service";
+import Reservation from "@/app/_components/Reservation";
+import TextExpander from "@/app/_components/TextExpander";
+import Spinner from "@/app/_components/Spinner";
 
 // OVERRIDE METADATA FROM THE ROOTLAYOUT - STATIC
 // export const metadata = {
@@ -43,6 +47,20 @@ export default async function Page({ params }) {
   const { cabinId } = await params;
   // // ERROR BOUNDARY TESTER
   // const { cabinIds } = await params;
+  // // > problem: WATERFALL FETCHES - TAKES SO MUCH TIME TO COMPLETE AS EACH FETCH BLOCKS OTHERS
+  // const cabin = await getCabin(cabinId);
+  // // FETCH SETTINGS DATA FOR CCs
+  // const settings = await getSettings();
+  // // FETCH CABIN DATA FOR CCs
+  // const bookedDates = await getBookedDatesByCabinId(cabinId);
+  // // > ALT#1. PROMSIFY ALL FETCHES - FAST AS FAST AS THE SLOWEST FETCH - NOT PERFECT!
+  // const [cabin, settings, bookedDates] = await Promise.all([
+  //   getCabin(cabinId),
+  //   getSettings(),
+  //   getBookedDatesByCabinId(cabinId),
+  // ]);
+
+  // > ALT#3. ONLY REQUIRED DATA FETCHER IS KEPT. THE REST IS SUB-OUT TO SUB SC.
   const cabin = await getCabin(cabinId);
 
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
@@ -95,9 +113,16 @@ export default async function Page({ params }) {
       </div>
 
       <div>
-        <h2 className="text-center text-5xl font-semibold">
-          Reserve today. Pay on arrival.
+        <h2 className="mb-10 text-center text-5xl font-semibold text-accent-400">
+          Reserve {name} today. Pay on arrival.
         </h2>
+
+        <p>ERNIE</p>
+        {/* USE SUSPENSE MECHANISM TO STOP SC BLOCKING THE ENTIRE PAGE LOADDUE TO ON-GOING FETCHING OPERATIONS INSIDE */}
+        <Suspense fallback={<Spinner />}>
+          {/* // >#3. CREATE A SUB SC TO HANDLE REST OF FETCHING FOR THE CCs ITS RESPONSIBLE FOR TO MAKE USE OF RPGRESSIVE STREAMING */}
+          <Reservation cabin={cabin} />
+        </Suspense>
       </div>
     </div>
   );
