@@ -24,6 +24,7 @@
   - Use CC in a SC
     - Use 'use client' directive in CC when CC passes a server boundary
   - Use SC in a CC
+    - Push a SC into CC as a children prop in a parenting SC
 
 - <strong>'App'</strong> based NextJS folder structure and project planning
 
