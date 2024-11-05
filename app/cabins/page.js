@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import CabinList from "@/app/_components/CabinList";
 import Filter from "@/app/_components/Filter";
 import Spinner from "@/app/_components/Spinner";
+import ReservationReminder from "@/app/_components/ReservationReminder";
 
 // // > ROUTE LEVEL REVALIDATION
 // // // ENFORCE DR
@@ -48,7 +49,10 @@ export default async function Page({ searchParams }) {
       <Suspense fallback={<Spinner />} key={filter}>
         {/* NOTE: key prop @ suspense allow us to show the Spinner fallback eachtime we load the cabinlist based on a new filter value. Otherwise, Suspense cant differentiate Suspenses and only one the loader will be displayed and later won't come out */}
         {/* FOR SUSPENSE WE MOVED ALL THE FETCHING DATA BUSINESS INTO ITS OWN COMPONENT WHERE THE CONTENT SUBJECT TO SUSPENSE IS CONTAINED */}
+        {/* SC */}
         <CabinList filter={filter} />
+        {/* CC */}
+        <ReservationReminder />
       </Suspense>
     </div>
   );

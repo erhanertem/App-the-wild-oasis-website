@@ -1,8 +1,8 @@
 // MAKE THIS CC AS WE ARE USING CLIENT-SIDE REACT-DAY-PICKER LIBRARY
 "use client";
 
+import { useReservation } from "@/app/_components/ReservationContext";
 import { isWithinInterval } from "date-fns";
-import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/src/style.css";
 
@@ -17,6 +17,9 @@ function isAlreadyBooked(range, datesArr) {
 }
 
 function DateSelector({ settings, bookedDates, cabin }) {
+  // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
+  const { range, setRange, setReminderCabin, handleReset } = useReservation();
+
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   // const { regularPrice, discount, numNights, cabinPrice } = cabin;
   const regularPrice = 23;
@@ -24,10 +27,11 @@ function DateSelector({ settings, bookedDates, cabin }) {
   const numNights = 23;
   const cabinPrice = 23;
 
-  // SETTINGS - NEEDS TO BE FETCHED FROM SUPABASE
+  // SETTINGS
   const { minBookingLength, maxBookingLength } = settings;
 
-  const [range, setRange] = useState({});
+  // WRITE OFF CABIN DATA TO CONTEXT FOR CABIN REMINDER BORROW
+  setReminderCabin(cabin);
 
   function handleSelect(selectedRange) {
     setRange((prevs) => ({ ...prevs, ...selectedRange }));
@@ -47,7 +51,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
         // fromDate={new Date()}
         // toYear={new Date().getFullYear() + 5}
         // BASED ON NEW API
-        startMonth={new Date(2020, 6)}
+        startMonth={new Date()}
         startDate={new Date()}
         endMonth={new Date(new Date().getFullYear() + 5, 11)} // December of the year 5 years from now
         captionLayout="dropdown"
@@ -85,7 +89,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
         {range.from || range.to ? (
           <button
             className="border border-primary-800 px-4 py-2 text-sm font-semibold"
-            onClick={() => resetRange()}
+            onClick={handleReset}
           >
             Clear
           </button>

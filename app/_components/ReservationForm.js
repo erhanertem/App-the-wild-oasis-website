@@ -1,4 +1,12 @@
+// MAKE THIS CC AS WE WANT OT BRING IN DATA FROM A SIBLING CC
+"use client";
+
+import { useReservation } from "@/app/_components/ReservationContext";
+
 function ReservationForm({ cabin }) {
+  // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
+  const { range } = useReservation();
+
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   const { maxCapacity } = cabin;
 
