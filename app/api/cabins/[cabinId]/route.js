@@ -4,10 +4,10 @@ import { getBookedDatesByCabinId, getCabin } from "@/app/_lib/data-service";
 
 // Signature for GET in API routes typically is like export async function GET(request, { params }) { ... }
 export async function GET(request, { params }) {
-  console.log(request);
-  console.log(params);
+  // console.log(request);
+  // console.log(params);
   // Extract the cabinId from PARAMS Object
-  const { cabinId } = params;
+  const { cabinId } = await params;
   // NOTE: Response object is a browser feature but NextJS
   // SEND SOME RESPONSE - @ http://localhost:3000/api/cabins/90
   try {

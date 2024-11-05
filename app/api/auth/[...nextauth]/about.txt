@@ -1,0 +1,1 @@
+[...nextauth] folder, catch all segments coming from nextauth
