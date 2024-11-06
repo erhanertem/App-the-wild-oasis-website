@@ -17,10 +17,13 @@
       - Passing fetched data from via propping
       - Using children propping
     - Client-component(CC) to Server-component(SC) flow
+      - Mutating data using API endpoint with route handling
       - Sharing filter state via URL (searchParams)
         - usePathname() hook
         - useSearchParams() hook
         - useRouter() hook
+    - Client-component(CC) to Client-component(CC) flow
+      - Utilizing Context API for sharing state/props around
   - Use CC in a SC
     - Use 'use client' directive in CC when CC passes a server boundary
   - Use SC in a CC
@@ -80,12 +83,13 @@
       - Enforce SSG+ISR rendering strategy
       - Enforce dynamic rendering strategy
 
+- Authnetication via AuthJS
+
   </details>
 
 &emsp;
 
-<img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/learning.gif" width="30px"/><strong>In
-addition to the project cirriculum:</strong>
+<img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/learning.gif" width="30px"/><strong>In addition to the project cirriculum:</strong>
 
 - N/A
 
