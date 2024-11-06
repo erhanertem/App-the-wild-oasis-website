@@ -9,6 +9,13 @@ const authConfig = {
       clientSecret: process.env.AUTH_GOOGLE_SECRET, // Google Client Secret from environment variables
     }),
   ],
+  callbacks: {
+    // NextAuth will call this function whenever one tries to access the protected route
+    authorized({ auth, request }) {
+      // auth reads the current session info
+      return !!auth?.user;
+    },
+  },
 };
 
 // Exporting parts of NextAuth - Handlers and session fn

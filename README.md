@@ -83,7 +83,10 @@
       - Enforce SSG+ISR rendering strategy
       - Enforce dynamic rendering strategy
 
-- Authnetication via AuthJS
+- Authentication via AuthJS
+
+  - Setup a NextAuth middleware that requires matcher config specified endpoints to be authenticated
+  - Protecting sub-routes via matcher confgi with wildcards
 
   </details>
 
