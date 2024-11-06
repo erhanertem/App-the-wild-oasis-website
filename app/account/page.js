@@ -1,16 +1,19 @@
+import { auth } from "@/app/_lib/auth";
+import { onlyFirstName } from "@/app/_utility/capitalize";
+
 // OVERRIDE METADATA FROM THE ROOTLAYOUT
 export const metadata = {
   title: "Guest area",
 };
 
-function Page() {
+export default async function Page() {
+  const session = await auth();
+
   return (
     <div>
       <h2 className="mb-7 text-2xl font-semibold text-accent-400">
-        Welcome, Erhan
+        Welcome, {onlyFirstName(session.user.name)}
       </h2>
     </div>
   );
 }
-
-export default Page;
