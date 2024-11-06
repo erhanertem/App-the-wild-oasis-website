@@ -2,8 +2,9 @@
 "use client";
 
 import { useReservation } from "@/app/_components/ReservationContext";
+import { capitalize } from "@/app/_utility/capitalize";
 
-function ReservationForm({ cabin }) {
+function ReservationForm({ cabin, user }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
   const { range } = useReservation();
 
@@ -15,16 +16,15 @@ function ReservationForm({ cabin }) {
       <div className="flex items-center justify-between bg-primary-800 px-16 py-2 text-primary-300">
         <p>Logged in as</p>
 
-        {/* <div className='flex gap-4 items-center'>
+        <div className="flex items-center gap-4">
           <img
-            // Important to display google profile images
-            referrerPolicy='no-referrer'
-            className='h-8 rounded-full'
+            referrerPolicy="no-referrer" // Important to display google profile images
+            className="h-8 rounded-full"
             src={user.image}
-            alt={user.name}
+            alt={capitalize(user.name)}
           />
-          <p>{user.name}</p>
-        </div> */}
+          <p>{capitalize(user.name)}</p>
+        </div>
       </div>
 
       <form className="flex flex-col gap-5 bg-primary-900 px-16 py-10 text-lg">

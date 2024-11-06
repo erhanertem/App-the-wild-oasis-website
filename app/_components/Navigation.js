@@ -1,4 +1,5 @@
 import { auth } from "@/app/_lib/auth";
+import { capitalize } from "@/app/_utility/capitalize";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -43,13 +44,7 @@ export default async function Navigation() {
                   // By using referrerPolicy="no-referrer", you're ensuring that no referrer information is sent when loading currentSession.user.image. This can be useful if the image is from a third-party source and you don’t want to expose your page’s URL, for privacy reasons or to prevent potential tracking.
                 />
               </div>
-              <span>
-                {currentSession.user.name
-                  .toLowerCase()
-                  .split(" ")
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(" ")}
-              </span>
+              <span>{capitalize(currentSession.user.name)}</span>
             </Link>
           ) : (
             <Link
