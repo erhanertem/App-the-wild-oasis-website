@@ -13,7 +13,7 @@
     "@heroicons/react": "^2.1.5",
     "@supabase/supabase-js": "^2.45.6",
     "date-fns": "^4.1.0",
-    "next": "15.0.1",
+    "next": "^15.0.2",
     "next-auth": "^5.0.0-beta.25",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-day-picker": "^9.2.1",

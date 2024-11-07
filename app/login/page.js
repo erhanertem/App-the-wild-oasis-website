@@ -12,6 +12,7 @@ export default function Page() {
         Sign in to access your guest area
       </h2>
 
+      {/* SC component */}
       <SignInButton />
     </div>
   );
