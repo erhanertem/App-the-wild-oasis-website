@@ -16,10 +16,6 @@ const authConfig = {
       return !!auth?.user;
     },
   },
-  pages: {
-    signIn: "/login",
-    signOut: "/",
-  },
 };
 
 // Exporting parts of NextAuth - Handlers and session fn
