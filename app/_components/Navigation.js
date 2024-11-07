@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function Navigation() {
   // Get the current login session
   const currentSession = await auth();
-  console.log(currentSession);
+  // console.log(currentSession);
 
   return (
     <nav className="z-10 text-xl">

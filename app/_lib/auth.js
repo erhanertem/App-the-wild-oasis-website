@@ -1,3 +1,4 @@
+import { createGuest, getGuest } from "@/app/_lib/data-service";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
@@ -11,11 +12,45 @@ const authConfig = {
   ],
 
   callbacks: {
-    // NextAuth will call this function whenever one tries to access the protected route
+    // >#1.Pre-auth middleware - Determines if a user is authorized to access protected routes.
     authorized({ auth, request }) {
       // auth reads the current session info
-      return !!auth?.user;
+      return !!auth?.user; // true || false
     },
+
+    // >#2. Pre-signin Middleware - Executes just before the sign-in is completed.
+    async signIn({ user, account, profile }) {
+      // Add your to supabase if does not exist
+      try {
+        // IF USER EXISTS YIELDS USER DATA
+        const existingGuest = await getGuest(user.email);
+        // IF USER DOES NOT EXIST IN DB, WRITE TO DB
+        if (!existingGuest)
+          await createGuest({ email: user.email, fullName: user.name });
+
+        return true; // Signin should return either true || false
+      } catch {
+        return false;
+      }
+    },
+    // >#3.Session middleware - Executes after signIn and is called each time the session is retrieved via auth()
+    async session({ session, user }) {
+      const guest = await getGuest(session.user.email);
+      session.user.guestId = guest.id;
+      return session; // Return revised session with userId retrieved from DB
+    },
+
+    // >#4. There is also redirect middleware - Determines the URL users are redirected to after signing in or signing out. Allows custom redirection behavior, which can be used if you want more control over where users go after authentication actions.
+    // async redirect({ url, baseUrl }) {
+    //   return url.startsWith(baseUrl) ? url : baseUrl;
+    // },
+    // >#5. There is also jwt middleware - Controls the contents of the JSON Web Token (JWT) that is generated and sent with the session.
+    // async jwt({ token, user }) {
+    //   if (user) {
+    //     token.userId = user.id;
+    //   }
+    //   return token;
+    // },
   },
 
   pages: {
