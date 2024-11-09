@@ -1,19 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 
-function UpdateProfileForm({ children }) {
-  // CHANGE
-  const countryFlag =
-    "https://upload.wikimedia.org/wikipedia/commons/4/4b/Flag_of_Chad.svg";
+import { updateProfile } from "@/app/_lib/server-actions";
+
+// CLIENT COMPONENT BECAUSE IT WILL BE USED TO MUTATE SERVER-SIDE DATA PER CLIENT'S INPUT
+function UpdateProfileForm({ children, guest }) {
+  console.log(guest);
+  const { fullName, email, nationalID, countryFlag } = guest;
 
   return (
-    <form className="flex flex-col gap-6 bg-primary-900 px-12 py-8 text-lg">
+    <form
+      action={updateProfile} // SERVER ACTION TO MUTATE DATA ON SERVER-SIDE
+      className="flex flex-col gap-6 bg-primary-900 px-12 py-8 text-lg"
+    >
       <div className="space-y-2">
         <label>Full name</label>
         <input
           disabled
+          defaultValue={fullName}
+          name="fullName"
           className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -22,6 +28,8 @@ function UpdateProfileForm({ children }) {
         <label>Email address</label>
         <input
           disabled
+          defaultValue={email}
+          name="email"
           className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -38,7 +46,6 @@ function UpdateProfileForm({ children }) {
             />
           </div>
         </div>
-
         {children}
       </div>
 
@@ -46,6 +53,7 @@ function UpdateProfileForm({ children }) {
         <label htmlFor="nationalID">National ID number</label>
         <input
           name="nationalID"
+          defaultValue={nationalID}
           className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm"
         />
       </div>

@@ -4,6 +4,7 @@ import Google from "next-auth/providers/google";
 
 // Configuration object for NextAuth
 const authConfig = {
+  // SIGN-IN PROVIDERS
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID, // Google Client ID from environment variables
@@ -53,6 +54,7 @@ const authConfig = {
     // },
   },
 
+  // REDIRECT PAGES UPON SIGNIN/SIGNOUT COMPLETE
   pages: {
     signIn: "/login",
     // signOut: "/", // Only if you are using client-side signOut version

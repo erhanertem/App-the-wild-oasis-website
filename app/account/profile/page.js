@@ -1,14 +1,20 @@
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfileForm from "@/app/_components/UpdateProfileForm";
+import { auth } from "@/app/_lib/auth";
+import { getGuest } from "@/app/_lib/data-service";
 
 // OVERRIDE METADATA FROM THE ROOTLAYOUT
 export const metadata = {
   title: "Update profile",
 };
 
-export default function Page() {
-  // CHANGE
-  const nationality = "portugal";
+// SERVER COMPONENT
+export default async function Page() {
+  const session = await auth();
+  // console.log(session);
+  const guest = await getGuest(session.user.email);
+  // console.log(guest);
+  const { nationality } = guest;
 
   return (
     <div>
@@ -21,7 +27,9 @@ export default function Page() {
         faster and smoother. See you soon!
       </p>
 
-      <UpdateProfileForm>
+      {/* CLIENT COMPONENT */}
+      <UpdateProfileForm guest={guest}>
+        {/* SERVER COMPONENT */}
         <SelectCountry
           name="nationality"
           id="nationality"

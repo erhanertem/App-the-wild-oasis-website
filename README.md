@@ -83,10 +83,20 @@
       - Enforce SSG+ISR rendering strategy
       - Enforce dynamic rendering strategy
 
-- Authentication via AuthJS
+- Authentication & Authorization via AuthJS
 
-  - Setup a NextAuth middleware that requires matcher config specified endpoints to be authenticated
-  - Protecting sub-routes via matcher confgi with wildcards
+  - Authentication
+    - Use server-actions @ signin and signout in SCs/CCs via form action wrapper
+    - Use client version of signOut in a CC (experiment)
+    - Read session informartion @ SCs viaq auth()
+  - Authorization - Protecting routes
+    - Protecting sub-routes via matcher config with wildcards
+    - Explore built-in AuthJS middlewares
+      - authorized() middleware
+      - signIn() middleware
+        - Write off new signin to Supabase
+      - session() middleware
+        - Create custom tailored session information
 
   </details>
 

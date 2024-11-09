@@ -2,6 +2,7 @@ import { getCountries } from "@/app/_lib/data-service";
 
 // Let's imagine your colleague already built this component 😃
 
+// SERVER COMPONENT - becaus eits async setup due to fetching countries - remains as SC as its being passed in as children to CC wrapper component
 async function SelectCountry({ defaultCountry, name, id, className }) {
   const countries = await getCountries();
   const flag =
