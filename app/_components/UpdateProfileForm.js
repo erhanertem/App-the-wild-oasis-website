@@ -1,5 +1,7 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+
 import Image from "next/image";
 
 import { updateProfile } from "@/app/_lib/server-actions";
@@ -8,9 +10,23 @@ import { updateProfile } from "@/app/_lib/server-actions";
 function UpdateProfileForm({ children, guest }) {
   const { fullName, email, nationalID, nationality, countryFlag } = guest;
 
+  const {
+    register, // Register form field values
+    handleSubmit, // Dial in actual form submission cb fn
+    reset, // Resets the form fields
+    formState: { errors }, // Gets the errors from onErrorFn handler out of RHF to be used in practical UI error handling mediums such as toaster
+  } = useForm();
+
+  // FORM SUBMISSION CB FN CALLING SERVER-ACTION MUTATION FN
+  const onSubmit = async (e) => {
+    const formData = new FormData(e.target);
+    console.log("💊", Object.fromEntries(formData));
+    await updateProfile(formData);
+  };
+
   return (
     <form
-      action={updateProfile} // SERVER ACTION TO MUTATE DATA ON SERVER-SIDE
+      onSubmit={handleSubmit(onSubmit)} // SERVER ACTION TO MUTATE DATA ON SERVER-SIDE
       className="flex flex-col gap-6 bg-primary-900 px-12 py-8 text-lg"
     >
       <div className="space-y-2">
@@ -51,10 +67,19 @@ function UpdateProfileForm({ children, guest }) {
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
         <input
-          name="nationalID"
+          {...register("nationalID", {
+            required: "This field is required",
+            pattern: {
+              value: /^[a-zA-Z0-9]{6,12}$/,
+              message: "Please provide a valid national ID",
+            },
+          })}
           defaultValue={nationalID}
           className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm"
         />
+        {errors?.nationalID?.message && (
+          <span className="text-red-500">{errors.nationalID.message}</span>
+        )}
       </div>
 
       <div className="flex items-center justify-end gap-6">

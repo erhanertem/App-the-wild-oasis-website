@@ -101,7 +101,7 @@
 - Data mutations with Server Actions
 
   - \<form> tag element with action attribute
-    - Instigate server side validation and mutations for a form submitted in a CC
+    - Use server-action for a form submission in a CC to handle data mutations and form field validation
 
   </details>
 
@@ -109,7 +109,9 @@
 
 <img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/learning.gif" width="30px"/><strong>In addition to the project cirriculum:</strong>
 
-- N/A
+- Separate client-side form validation from server-action data mutations to improve UX
+
+  - client-side validation via react-hook-form
 
   &emsp;
 
