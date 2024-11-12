@@ -10,8 +10,10 @@ export const metadata = {
 
 // SERVER COMPONENT
 export default async function Page() {
+  // READ SESSION DATA
   const session = await auth();
   // console.log(session);
+  // GET DETAILS OF THE USER FROM DB BASED ON SESSION USER
   const guest = await getGuest(session.user.email);
   // console.log(guest);
   const { nationality } = guest;

@@ -6,8 +6,7 @@ import { updateProfile } from "@/app/_lib/server-actions";
 
 // CLIENT COMPONENT BECAUSE IT WILL BE USED TO MUTATE SERVER-SIDE DATA PER CLIENT'S INPUT
 function UpdateProfileForm({ children, guest }) {
-  console.log(guest);
-  const { fullName, email, nationalID, countryFlag } = guest;
+  const { fullName, email, nationalID, nationality, countryFlag } = guest;
 
   return (
     <form

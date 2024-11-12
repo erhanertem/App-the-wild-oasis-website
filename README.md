@@ -14,8 +14,8 @@
 
   - Sharing data @ RSC
     - Server-component(SC) to Client-component(CC) flow
-      - Passing fetched data from via propping
-      - Using children propping
+      - Passing fetched data via propping
+      - Children propping @ CC
     - Client-component(CC) to Server-component(SC) flow
       - Mutating data using API endpoint with route handling
       - Sharing filter state via URL (searchParams)
@@ -97,6 +97,11 @@
         - Write off new signin to Supabase
       - session() middleware
         - Create custom tailored session information
+
+- Data mutations with Server Actions
+
+  - \<form> tag element with action attribute
+    - Instigate server side validation and mutations for a form submitted in a CC
 
   </details>
 
