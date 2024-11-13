@@ -35,7 +35,7 @@ export default async function Page() {
         <SelectCountry
           name="nationality"
           id="nationality"
-          className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm"
+          className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
           defaultCountry={nationality}
         />
       </UpdateProfileForm>
