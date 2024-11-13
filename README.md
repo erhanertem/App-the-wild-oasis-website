@@ -76,12 +76,15 @@
 
 - Revalidation handling
 
-  - Component level revalidation
-    - noStore() for PPR (future)
-  - Route level revalidation
-    - revalidate object
-      - Enforce SSG+ISR rendering strategy
-      - Enforce dynamic rendering strategy
+  - Time-based revalidation
+    - Component level revalidation
+      - noStore() for PPR (future)
+    - Route level revalidation
+      - revalidate object
+        - Enforce SSG+ISR rendering strategy
+        - Enforce dynamic rendering strategy
+  - Manual on-demand revalidation @ server-actions
+    - revalidatePath()
 
 - Authentication & Authorization via AuthJS
 
@@ -100,6 +103,8 @@
 
 - Data mutations with Server Actions
 
+  - form validations and server-actions
+
   - \<form> tag element with action attribute
     - Instigate server side validation and mutations for a form submitted in a CC
 
@@ -109,7 +114,10 @@
 
 <img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/learning.gif" width="30px"/><strong>In addition to the project cirriculum:</strong>
 
-- N/A
+- Instead of sole server-action side form validation, explored:
+
+  1. client-side validation via react-hook-form, server-side auth validation @ form server-action
+  2. client-side validation and server-side revalidation via conform+zod, server-side auth validation @ form server-action
 
   &emsp;
 

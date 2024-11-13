@@ -196,11 +196,7 @@ export async function updateGuest(id, updatedFields) {
     .select()
     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Guest could not be updated");
-  }
-  return data;
+  return { data, error };
 }
 
 export async function updateBooking(id, updatedFields) {

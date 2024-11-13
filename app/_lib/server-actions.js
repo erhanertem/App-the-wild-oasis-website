@@ -28,11 +28,10 @@ export async function updateProfile(prevState, formData) {
 
   const updateData = { nationality, countryFlag, nationalID };
   // console.log(updateData);
-  // SERVER RELATED ERROR TO BE PASSED ONTO CLIENT AS FEEDBACK
-  try {
-    await updateGuest(session.user.guestId, updateData);
-  } catch (error) {
-    throw new Error("An error occured updating nationality");
+
+  const { data, error } = await updateGuest(session.user.guestId, updateData);
+  if (error) {
+    throw new Error("Profile could not be updated");
   }
 }
 
