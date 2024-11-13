@@ -30,7 +30,7 @@ function UpdateProfileForm({ children, guest }) {
     <form
       // COMBINE
       id={form.id} // Conform form id
-      onSubmit={form.onSubmit} // Execiye conform form
+      onSubmit={form.onSubmit} // Execute conform form
       action={action} // Define server action
       className="flex flex-col gap-6 bg-primary-900 px-12 py-8 text-lg"
     >

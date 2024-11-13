@@ -15,8 +15,6 @@ export default async function Page() {
   // console.log(session);
   // GET DETAILS OF THE USER FROM DB BASED ON SESSION USER
   const guest = await getGuest(session.user.email);
-  // console.log(guest);
-  const { nationality } = guest;
 
   return (
     <div>
@@ -36,7 +34,7 @@ export default async function Page() {
           name="nationality"
           id="nationality"
           className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
-          defaultCountry={nationality}
+          guest={guest}
         />
       </UpdateProfileForm>
     </div>

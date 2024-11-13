@@ -2,10 +2,10 @@
 "use server";
 
 import { parseWithZod } from "@conform-to/zod";
-
-import { auth, signIn, signOut } from "@/app/_lib/auth";
-import { updateGuest } from "@/app/_lib/data-service";
+import { revalidatePath } from "next/cache";
+import { supabase } from "@/app/_lib/supabase";
 import { userFormSchema } from "@/app/_lib/zod-schema";
+import { auth, signIn, signOut } from "@/app/_lib/auth";
 
 export async function updateProfile(prevState, formData) {
   // console.log("👉Server action: ", formData);
@@ -27,12 +27,16 @@ export async function updateProfile(prevState, formData) {
   const [nationality, countryFlag] = formData.get("nationality").split("%");
 
   const updateData = { nationality, countryFlag, nationalID };
-  // console.log(updateData);
 
-  const { data, error } = await updateGuest(session.user.guestId, updateData);
+  const { data, error } = await supabase
+    .from("guests")
+    .update(updateData)
+    .eq("id", session.user.guestId);
   if (error) {
     throw new Error("Profile could not be updated");
   }
+
+  revalidatePath("/account/profile"); // Revalidate cache only on this endpoint
 }
 
 // SERVES SERVER ACTION @ SIGNINBUTTON
