@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { signInAction } from "@/app/_lib/server-actions";
+import { signInAction } from "@/app/_lib/actions";
 // import { signIn } from "@/app/_lib/auth";
 
 // IMPORTANT! THIS IS A SC. MEANING WE CANT HAVE INTERRACTIVITY SUCH AS ONCLICK FOR BUTTON TO CALL A SIGNIN FNs BUT WE HAVE SERVER ACTIONS TO ADD INTERACTIVITY FOR SCs

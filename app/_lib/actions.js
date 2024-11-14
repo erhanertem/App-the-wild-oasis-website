@@ -1,8 +1,10 @@
 // DIRECTIVE USED FOR FUNCTIONS SERVING SERVER ACTIONS
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { auth, signIn, signOut } from "@/app/_lib/auth";
-import { updateGuest } from "@/app/_lib/data-service";
+import { supabase } from "@/app/_lib/supabase";
 
 export async function updateProfile(formData) {
   // console.log("👉Server action: ", formData);
@@ -25,12 +27,17 @@ export async function updateProfile(formData) {
 
   const updateData = { nationality, countryFlag, nationalID };
   // console.log(updateData);
+
   // SERVER RELATED ERROR TO BE PASSED ONTO CLIENT AS FEEDBACK
-  try {
-    await updateGuest(session.user.guestId, updateData);
-  } catch (error) {
-    throw new Error("An error occured updating nationality");
-  }
+  const { data, error } = await supabase
+    .from("guests")
+    .update(updateData)
+    .eq("id", session.user.guestId);
+
+  if (error) throw new Error("Guest could not be updated");
+
+  // REVALIDATE PATH TO REFRESH THE CACHE
+  revalidatePath("/account/profile"); // Revalidate cache only on this endpoint
 }
 
 // SERVES SERVER ACTION @ SIGNINBUTTON

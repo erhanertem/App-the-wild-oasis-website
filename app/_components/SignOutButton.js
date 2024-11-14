@@ -1,7 +1,5 @@
-import { signOutAction } from "@/app/_lib/server-actions";
+import { signOutAction } from "@/app/_lib/actions";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
-
-import { signOut } from "next-auth/react"; // Import from next-auth/react
 
 // THIS IS A CC
 function SignOutButton() {

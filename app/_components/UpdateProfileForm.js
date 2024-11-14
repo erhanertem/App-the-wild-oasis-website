@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 
-import { updateProfile } from "@/app/_lib/server-actions";
+import { updateProfile } from "@/app/_lib/actions";
 
 // CLIENT COMPONENT BECAUSE IT WILL BE USED TO MUTATE SERVER-SIDE DATA PER CLIENT'S INPUT
 function UpdateProfileForm({ children, guest }) {
-  const { fullName, email, nationalID, nationality, countryFlag } = guest;
+  const { fullName, email, nationalID, countryFlag } = guest;
 
   return (
     <form
@@ -45,6 +45,7 @@ function UpdateProfileForm({ children, guest }) {
             />
           </div>
         </div>
+
         {children}
       </div>
 
