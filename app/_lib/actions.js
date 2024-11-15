@@ -37,7 +37,7 @@ export async function updateProfile(formData) {
   if (error) throw new Error("Guest could not be updated");
 
   // REVALIDATE PATH TO REFRESH THE CACHE
-  revalidatePath("/account/profile"); // Revalidate cache only on this endpoint
+  revalidatePath("/account/profile", "layout"); // Revalidate cache only on this endpoint
 }
 
 // SERVES SERVER ACTION @ SIGNINBUTTON
