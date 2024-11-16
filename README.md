@@ -108,6 +108,7 @@
       - Instigate server side validation and mutations for a form submitted in a CC
       - Conduct fully server-side form and auth validation @ server-action
       - Conduct server-side and client-side form validation via conform+zod+server-acto0n
+  - form isLoading state using useFormStatus from react-dom
 
   </details>
 
@@ -121,6 +122,7 @@
   2. client-side validation and server-side revalidation via conform+zod, server-side auth validation @ form server-action
 
 - Greyout form fields while updating guest profile
+- Explore useActionState alternatingly for NextJS15 setups
 
   &emsp;
 
