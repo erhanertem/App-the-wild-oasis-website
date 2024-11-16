@@ -104,9 +104,10 @@
 - Data mutations with Server Actions
 
   - form validations and server-actions
-
-  - \<form> tag element with action attribute
-    - Instigate server side validation and mutations for a form submitted in a CC
+    - \<form> tag element with action attribute
+      - Instigate server side validation and mutations for a form submitted in a CC
+      - Conduct fully server-side form and auth validation @ server-action
+      - Conduct server-side and client-side form validation via conform+zod+server-acto0n
 
   </details>
 

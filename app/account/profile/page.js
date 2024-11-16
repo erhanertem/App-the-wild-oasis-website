@@ -1,7 +1,7 @@
-import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfileForm from "@/app/_components/UpdateProfileForm";
 import { auth } from "@/app/_lib/auth";
 import { getGuest } from "@/app/_lib/data-service";
+import { getCountries } from "@/app/_lib/data-service";
 
 // OVERRIDE METADATA FROM THE ROOTLAYOUT
 export const metadata = {
@@ -16,6 +16,8 @@ export default async function Page() {
   // GET DETAILS OF THE USER FROM DB BASED ON SESSION USER
   const guest = await getGuest(session.user.email);
 
+  const countries = await getCountries();
+
   return (
     <div>
       <h2 className="mb-4 text-2xl font-semibold text-accent-400">
@@ -28,15 +30,7 @@ export default async function Page() {
       </p>
 
       {/* CLIENT COMPONENT */}
-      <UpdateProfileForm guest={guest}>
-        {/* SERVER COMPONENT */}
-        <SelectCountry
-          name="nationality"
-          id="nationality"
-          className="w-full rounded-sm bg-primary-200 px-5 py-3 text-primary-800 shadow-sm disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
-          guest={guest}
-        />
-      </UpdateProfileForm>
+      <UpdateProfileForm guest={guest} countries={countries} />
     </div>
   );
 }
