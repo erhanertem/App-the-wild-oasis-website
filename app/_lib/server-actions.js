@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { supabase } from "@/app/_lib/supabase";
 import { userFormSchema } from "@/app/_lib/zod-schema";
 import { auth, signIn, signOut } from "@/app/_lib/auth";
-import { deleteBooking, getBookings } from "@/app/_lib/data-service";
+import { getBookings } from "@/app/_lib/data-service";
 
 export async function deleteReservation(bookingId) {
   // GUARD CLAUSE - AUTHENTICATION CHECK TO PROCEED WITH REST OF THE ACTIONS
