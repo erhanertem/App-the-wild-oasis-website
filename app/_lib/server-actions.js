@@ -6,6 +6,30 @@ import { revalidatePath } from "next/cache";
 import { supabase } from "@/app/_lib/supabase";
 import { userFormSchema } from "@/app/_lib/zod-schema";
 import { auth, signIn, signOut } from "@/app/_lib/auth";
+import { deleteBooking, getBookings } from "@/app/_lib/data-service";
+
+export async function deleteReservation(bookingId) {
+  // GUARD CLAUSE - AUTHENTICATION CHECK TO PROCEED WITH REST OF THE ACTIONS
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+
+  // GUARD CLAUSE - ANY MALICIOUS USER CAN DELETE THE RESERVATIONS NOT BELONGIGN THEM. IN ORDER TO AVOID SUCH SCENARIO, THE BOOKINGID NEEDS TO BE THE RESERVATION OF THE USER AND ONLY THEN IT SHOULD BE DELETED.
+  const guestBookings = await getBookings(session.user.guestId);
+  const bookingIdsBelongingToUser = guestBookings.map((booking) => booking.id);
+  if (!bookingIdsBelongingToUser.includes(bookingId))
+    throw new Error("You are not allowed to delete this booking");
+
+  const { error } = await supabase
+    .from("bookings")
+    .delete()
+    .eq("id", bookingId);
+
+  if (error) {
+    throw new Error("Booking could not be deleted");
+  }
+
+  revalidatePath("/account/reservations"); // Revalidate cache only on this endpoint
+}
 
 export async function updateProfile(prevState, formData) {
   // console.log("👉Server action: ", formData);
@@ -32,6 +56,7 @@ export async function updateProfile(prevState, formData) {
     .from("guests")
     .update(updateData)
     .eq("id", session.user.guestId);
+
   if (error) {
     throw new Error("Profile could not be updated");
   }
