@@ -120,6 +120,8 @@
   1. client-side validation via react-hook-form, server-side auth validation @ form server-action
   2. client-side validation and server-side revalidation via conform+zod, server-side auth validation @ form server-action
 
+- Greyout form fields while updating guest profile
+
   &emsp;
 
 <img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/report.gif" width="30px"/><strong>Pending Issues:</strong>

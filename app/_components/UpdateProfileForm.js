@@ -85,11 +85,7 @@ function FormContent({ guest, countries, fields }) {
             />
           </div>
         </div>
-        <SelectCountry
-          guest={guest}
-          countries={countries}
-          pending={pending}
-        ></SelectCountry>
+        <SelectCountry guest={guest} countries={countries} pending={pending} />
       </div>
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
