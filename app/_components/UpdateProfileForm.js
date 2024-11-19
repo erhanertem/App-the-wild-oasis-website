@@ -8,6 +8,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { updateProfile } from "@/app/_lib/server-actions";
 import { userFormSchema } from "@/app/_lib/zod-schema";
 import SelectCountry from "@/app/_components/SelectCountry";
+import SubmitButton from "@/app/_components/SubmitButton";
 
 // CLIENT COMPONENT BECAUSE IT WILL BE USED TO MUTATE SERVER-SIDE DATA PER CLIENT'S INPUT
 function UpdateProfileForm({ guest, countries }) {
@@ -15,7 +16,8 @@ function UpdateProfileForm({ guest, countries }) {
   /**
    * SADLY SINCE THIS PROJECT IS BASED ON NEXTJS 14, THEREFORE WE CAN'T USE
    * import { useActionState } from 'react';
-   * const [state, formAction, isPending] = useActionState(fn, initialState, permalink?);
+   * import { SubmitButton } from '@/app/_components/SubmitButton';
+const [state, formAction, isPending] = useActionState(fn, initialState, permalink?);
    * FROM 'REACT 19' WHICH ONLY AVAILABLE TO NEXTJS 15 SETUPS
    */
   const [lastResult, action] = useFormState(updateProfile, undefined);
@@ -104,12 +106,13 @@ function FormContent({ guest, countries, fields }) {
         </p>
       </div>
       <div className="flex items-center justify-end gap-6">
-        <button
-          disabled={pending}
+        <SubmitButton
           className="bg-accent-500 px-8 py-4 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+          context="update"
+          isPending={pending}
         >
-          {pending ? "Updating..." : "Update profile"}
-        </button>
+          Update profile
+        </SubmitButton>
       </div>
     </>
   );

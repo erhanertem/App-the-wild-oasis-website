@@ -1,6 +1,7 @@
 import { getBooking } from "@/app/_lib/data-service";
 import { getCabin } from "@/app/_lib/data-service";
 import { updateReservation } from "@/app/_lib/server-actions";
+import SubmitButton from "@/app/_components/SubmitButton";
 
 export default async function Page({ params }) {
   const { bookingId } = params;
@@ -53,9 +54,12 @@ export default async function Page({ params }) {
         </div>
 
         <div className="flex items-center justify-end gap-6">
-          <button className="bg-accent-500 px-8 py-4 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
+          <SubmitButton
+            className="bg-accent-500 px-8 py-4 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+            context="update"
+          >
             Update reservation
-          </button>
+          </SubmitButton>
         </div>
       </form>
     </div>

@@ -124,6 +124,7 @@
 
 - Greyout form fields while updating guest profile
 - Explore useActionState alternatingly for NextJS15 setups
+- Make a reusable and flexible form submit button that accepts or internally handles useFormStatus pendign state depending on the context.
 
   &emsp;
 
