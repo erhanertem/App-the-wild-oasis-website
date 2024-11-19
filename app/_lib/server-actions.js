@@ -1,23 +1,57 @@
 // DIRECTIVE USED FOR FUNCTIONS SERVING SERVER ACTIONS
 "use server";
 
-import { parseWithZod } from "@conform-to/zod";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { parseWithZod } from "@conform-to/zod";
+
 import { supabase } from "@/app/_lib/supabase";
 import { userFormSchema } from "@/app/_lib/zod-schema";
 import { auth, signIn, signOut } from "@/app/_lib/auth";
-import { getBookings } from "@/app/_lib/data-service";
+import { bookingAuthroizationCheck } from "@/app/_utility/checkIfBookingBelongsToUser";
+
+export async function updateReservation(formData) {
+  // GUARD CLAUSE - AUTHENTICATION - CHECK TO PROCEED WITH REST OF THE ACTIONS
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+  const bookingId = Number(formData.get("bookingId"));
+
+  // GUARD CLAUSE - AUTHORIZATION - ANY MALICIOUS USER CAN UPDATE THE RESERVATIONS NOT BELONGING THEM. IN ORDER TO AVOID SUCH SCENARIO, THE BOOKINGID NEEDS TO BE THE RESERVATION OF THE USER AND ONLY THEN IT SHOULD BE UPDATED.
+  bookingAuthroizationCheck(session, bookingId, "update");
+
+  // MUTATE DATA
+  const updatedData = {
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations").slice(0, 1000), // Limti words input into the observations field - precaution
+  };
+  // console.log(formData);
+
+  const { data, error } = await supabase
+    .from("bookings")
+    .update(updatedData)
+    .eq("id", bookingId);
+
+  if (error) {
+    throw new Error("Booking could not be updated");
+  }
+
+  // REVALIDATE STALE CACHE
+  // REVALIDATE @ STATIC ROUTE
+  revalidatePath("/account/reservations");
+  // REVALIDATE @ DYNAMIC ROUTE
+  revalidatePath(`/account/reservations/edit/${bookingId}`);
+
+  // REDIRECT TO ...
+  redirect("/account/reservations");
+}
 
 export async function deleteReservation(bookingId) {
-  // GUARD CLAUSE - AUTHENTICATION CHECK TO PROCEED WITH REST OF THE ACTIONS
+  // GUARD CLAUSE - AUTHENTICATION - CHECK TO PROCEED WITH REST OF THE ACTIONS
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
 
-  // GUARD CLAUSE - ANY MALICIOUS USER CAN DELETE THE RESERVATIONS NOT BELONGIGN THEM. IN ORDER TO AVOID SUCH SCENARIO, THE BOOKINGID NEEDS TO BE THE RESERVATION OF THE USER AND ONLY THEN IT SHOULD BE DELETED.
-  const guestBookings = await getBookings(session.user.guestId);
-  const bookingIdsBelongingToUser = guestBookings.map((booking) => booking.id);
-  if (!bookingIdsBelongingToUser.includes(bookingId))
-    throw new Error("You are not allowed to delete this booking");
+  // GUARD CLAUSE - AUTHORIZATION - ANY MALICIOUS USER CAN DELETE THE RESERVATIONS NOT BELONGIGN THEM. IN ORDER TO AVOID SUCH SCENARIO, THE BOOKINGID NEEDS TO BE THE RESERVATION OF THE USER AND ONLY THEN IT SHOULD BE DELETED.
+  bookingAuthroizationCheck(session, bookingId, "delete");
 
   const { error } = await supabase
     .from("bookings")

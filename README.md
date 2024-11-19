@@ -84,7 +84,8 @@
         - Enforce SSG+ISR rendering strategy
         - Enforce dynamic rendering strategy
   - Manual on-demand revalidation @ server-actions
-    - revalidatePath()
+    - revalidatePath() @ static routes
+    - revalidatePath() @ dynamic(params) routes
 
 - Authentication & Authorization via AuthJS
 
@@ -108,7 +109,7 @@
       - Instigate server side validation and mutations for a form submitted in a CC
       - Conduct fully server-side form and auth validation @ server-action
       - Conduct server-side and client-side form validation via conform+zod+server-acto0n
-  - form isLoading state using useFormStatus from react-dom
+  - form isLoading state using useFormStatus from react-dom (NextJS 14)
 
   </details>
 
