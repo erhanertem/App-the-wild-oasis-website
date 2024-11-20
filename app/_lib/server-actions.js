@@ -46,6 +46,10 @@ export async function updateReservation(formData) {
 }
 
 export async function deleteReservation(bookingId) {
+  // // TESTING OPTIMISTIC DELETE
+  // await new Promise((res) => setTimeout(res, 2000)); // Test actual deletion lag a bit to see the affect of otimistic delete action taking over UI
+  // throw new Error("I FAILED TO DELETE"); // Simulates not going further with the deleting to test optimistic delete and reverting back to oirigin state as data deletion has failed.
+
   // GUARD CLAUSE - AUTHENTICATION - CHECK TO PROCEED WITH REST OF THE ACTIONS
   const session = await auth();
   if (!session) throw new Error("You must be logged in");

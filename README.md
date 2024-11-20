@@ -111,6 +111,10 @@
       - Conduct server-side and client-side form validation via conform+zod+server-acto0n
   - form isLoading state using useFormStatus from react-dom (NextJS 14)
 
+- Data mutation handling @ CCs
+
+  - useOptimistic() react hook
+
   </details>
 
 &emsp;
