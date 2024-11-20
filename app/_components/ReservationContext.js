@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const ReservationContext = createContext();
 
@@ -11,8 +11,9 @@ function ReservationProvider({ children }) {
   const [range, setRange] = useState(initialState);
   const [reminderCabin, setReminderCabin] = useState(null);
 
-  const resetRange = () => setRange(initialState);
-  const resetReminderCabin = () => setReminderCabin(null);
+  useEffect(() => {
+    console.log(range);
+  }, [range]);
 
   function handleReset() {
     setRange(initialState);

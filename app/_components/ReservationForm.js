@@ -2,14 +2,40 @@
 "use client";
 
 import { useReservation } from "@/app/_components/ReservationContext";
+import { createReservation } from "@/app/_lib/server-actions";
 import { capitalize } from "@/app/_utility/capitalize";
+import { differenceInDays } from "@/node_modules/date-fns/differenceInDays";
 
 function ReservationForm({ cabin, user }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
   const { range } = useReservation();
 
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
-  const { maxCapacity } = cabin;
+  const { maxCapacity, regularPrice, discount, id } = cabin;
+
+  const startDate = range.from;
+  const endDate = range.to;
+
+  const numNights = differenceInDays(endDate, startDate) + 1; // Be able to select one night
+  const cabinPrice = numNights * (regularPrice - discount);
+
+  // DATA THAT NEEDS TO BE PASSED TO SERVER ACTION ALONG WITH FORMDATA INPUTS
+  /**
+   * FIRST METHOD: CREATE HIDDEN FIELDS TO SUBMIT AS FORMDATA
+   * SECOND METHOD: BIND THIS DATA TO SERVER ACTION FUNCTION
+   */
+  const bookingData = {
+    startDate,
+    endDate,
+    numNights,
+    cabinPrice,
+    cabinId: id,
+  };
+  const createReservationWithBookingData = createReservation.bind(
+    null,
+    bookingData,
+    range, // Data for checking server-side overllaping reservation re-validation
+  );
 
   return (
     <div className="scale-[1.01]">
@@ -27,7 +53,11 @@ function ReservationForm({ cabin, user }) {
         </div>
       </div>
 
-      <form className="flex flex-col gap-5 bg-primary-900 px-16 py-10 text-lg">
+      <form
+        // action={createReservation} //Server-action for creating a reservation
+        action={createReservationWithBookingData} //Server-action for creating a reservation with additional data passed onto this function
+        className="flex flex-col gap-5 bg-primary-900 px-16 py-10 text-lg"
+      >
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
           <select

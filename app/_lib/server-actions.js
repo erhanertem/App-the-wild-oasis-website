@@ -9,6 +9,63 @@ import { supabase } from "@/app/_lib/supabase";
 import { userFormSchema } from "@/app/_lib/zod-schema";
 import { auth, signIn, signOut } from "@/app/_lib/auth";
 import { bookingAuthroizationCheck } from "@/app/_utility/checkIfBookingBelongsToUser";
+import { isAlreadyBooked } from "@/app/_utility/isAlreadyBooked";
+import { getBookedDatesByCabinId } from "@/app/_lib/data-service";
+
+export async function createReservation(
+  bookingData, // ... and there may be more based on the bind args @ ReservationForm.js
+  range, // Data for checking server-side overllaping reservation re-validation
+  formData, // Formdata needs to be always coming the last argument due to binding used @ ReservationForm.js
+) {
+  // GUARD CLAUSE - AUTHENTICATION - CHECK TO PROCEED WITH REST OF THE ACTIONS
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+
+  // PREP THE FINAL DATA FOR CREATING RESERVATION
+  // // NOTE IF FORM DATA IS HUGE WE CAN CONVERT FORM DATA TO EITHER AN ARRAY OR AN OBJECT BEFORE WE EXTRACT DATA FROM IT
+  // console.log("❌", formData);
+  // console.log("❌", bookingData);
+  // const x = Object.fromEntries(formData.entries());
+  // console.log("❌", x);
+  // const y = Array.from(formData.entries());
+  // console.log("❌", y);
+
+  const newBookingData = {
+    ...bookingData,
+    guestId: session.user.guestId,
+    extrasPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    status: "unconfirmed",
+    isPaid: false,
+    hasBreakfast: false,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations").slice(0, 1000), // Limti words input into the observations field - precaution
+  };
+  // console.log(formData, newBookingData);
+  // GUARD CLAUSE - SERVER SIDE OVERLAPPING DATE RESERVATION CHECK AGAINST MALICIOUS ACTORS
+  // FETCH CABIN BOOKING DATA FOR CC
+  const bookedDates = await getBookedDatesByCabinId(newBookingData.cabinId);
+  // console.log("✅", bookedDates);
+  const overlappingReservation = isAlreadyBooked(range, bookedDates);
+  if (overlappingReservation)
+    throw new Error("Overlapping date pick. Check your reservation dates");
+
+  // DB MUTATION - CREATE RESERVATION
+  const { data, error } = await supabase
+    .from("bookings")
+    .insert([newBookingData]);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be created");
+  }
+
+  // REVALIDATE STALE CACHE
+  // REVALIDATE @ STATIC ROUTE
+  revalidatePath("/account/reservations");
+  // REVALIDATE @ DYNAMIC ROUTE
+  revalidatePath(`/account/reservations/edit/${bookingId}`);
+}
 
 export async function updateReservation(formData) {
   // GUARD CLAUSE - AUTHENTICATION - CHECK TO PROCEED WITH REST OF THE ACTIONS

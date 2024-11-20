@@ -2,35 +2,28 @@
 "use client";
 
 import { useReservation } from "@/app/_components/ReservationContext";
+import { isAlreadyBooked } from "@/app/_utility/isAlreadyBooked";
 import { differenceInDays } from "@/node_modules/date-fns/differenceInDays";
 import { isPast } from "@/node_modules/date-fns/isPast";
 import { isSameDay } from "@/node_modules/date-fns/isSameDay";
-import { isWithinInterval } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/src/style.css";
-
-function isAlreadyBooked(range, datesArr) {
-  return (
-    range.from &&
-    range.to &&
-    datesArr.some((date) =>
-      isWithinInterval(date, { start: range.from, end: range.to }),
-    )
-  );
-}
 
 function DateSelector({ settings, bookedDates, cabin }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
   const { range, setRange, setReminderCabin, handleReset } = useReservation();
 
   // GUARD CLAUSE - CHECK FOR RANGE SPAN OVERLAPPING WITH EXISTING BOOKED DATES
+  // VERY IMPORTANT! NOTE THAT THIS IS CLIENT-SIDE CHECK, MEANING, ANY MALICIOUS ACTOR CAN EASILY HACK INTO CREATING AN OVERLLAPING DATE RESERVATION BY PLAYING AROUND WITH THE DISABLED PROPETY OF THE DAYPICKER COMPONENT - MEANING A SERVER-SIDE DATE OVERLLAPING CHECK HAS TO BE ALSO IMPLEMENTED BEFORE PROCEEDING WITH ANY MUTATION TO DB.
+  // // > TEST: SIMULATE MALICIOUS ACTOR ATTEMPT
+  // const displayRange = range;
   const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
 
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   // console.log(cabin);
-  console.log(bookedDates);
+  // console.log(bookedDates);
   const { regularPrice, discount } = cabin;
-  const numNights = differenceInDays(displayRange.to, displayRange.from) + 1;
+  const numNights = differenceInDays(displayRange.to, displayRange.from) + 1; // Be able to select a single night not a range of nights
   const cabinPrice = numNights * (regularPrice - discount);
 
   // SETTINGS
