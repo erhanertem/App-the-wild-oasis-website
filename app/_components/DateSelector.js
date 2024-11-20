@@ -2,6 +2,9 @@
 "use client";
 
 import { useReservation } from "@/app/_components/ReservationContext";
+import { differenceInDays } from "@/node_modules/date-fns/differenceInDays";
+import { isPast } from "@/node_modules/date-fns/isPast";
+import { isSameDay } from "@/node_modules/date-fns/isSameDay";
 import { isWithinInterval } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/src/style.css";
@@ -20,12 +23,15 @@ function DateSelector({ settings, bookedDates, cabin }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
   const { range, setRange, setReminderCabin, handleReset } = useReservation();
 
+  // GUARD CLAUSE - CHECK FOR RANGE SPAN OVERLAPPING WITH EXISTING BOOKED DATES
+  const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
+
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
-  // const { regularPrice, discount, numNights, cabinPrice } = cabin;
-  const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
+  // console.log(cabin);
+  console.log(bookedDates);
+  const { regularPrice, discount } = cabin;
+  const numNights = differenceInDays(displayRange.to, displayRange.from) + 1;
+  const cabinPrice = numNights * (regularPrice - discount);
 
   // SETTINGS
   const { minBookingLength, maxBookingLength } = settings;
@@ -42,10 +48,10 @@ function DateSelector({ settings, bookedDates, cabin }) {
       <DayPicker
         className="place-self-center pt-12"
         mode="range"
-        min={minBookingLength + 1}
+        min={minBookingLength - 1}
         max={maxBookingLength}
         onSelect={handleSelect} // Write the state if selected a date
-        selected={range} // Read the state
+        selected={displayRange} // Read the state
         // // OLD API
         // fromMonth={new Date()}
         // fromDate={new Date()}
@@ -56,6 +62,11 @@ function DateSelector({ settings, bookedDates, cabin }) {
         endMonth={new Date(new Date().getFullYear() + 5, 11)} // December of the year 5 years from now
         captionLayout="dropdown"
         numberOfMonths={2} // Show only 2 months
+        disabled={
+          (curDate) =>
+            isPast(curDate) || // Disable dates in the past and current day for booking
+            bookedDates.some((date) => isSameDay(date, curDate)) // disable upcoming dates
+        }
       />
 
       <div className="flex h-[72px] items-center justify-between bg-accent-500 px-8 text-primary-800">
