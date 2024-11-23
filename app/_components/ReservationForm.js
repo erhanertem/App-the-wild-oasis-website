@@ -10,7 +10,7 @@ import SubmitButton from "@/app/_components/SubmitButton";
 
 function ReservationForm({ cabin, user }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
-  const { displayRange } = useReservation();
+  const { displayRange, setRange, initialState } = useReservation();
 
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   const { maxCapacity, regularPrice, discount, id } = cabin;
@@ -59,6 +59,9 @@ function ReservationForm({ cabin, user }) {
     bookingData,
     displayRange, // Data for checking server-side overllaping reservation re-validation
   );
+  const handleDayPickerRangeReset = () => {
+    setRange(initialState);
+  };
 
   return (
     <div className="scale-[1.01]">
@@ -81,7 +84,15 @@ function ReservationForm({ cabin, user }) {
         // 3RD OPTION OF PASSING MULTI ARGS TO A FORMDATA
         // action={(formData) => createReservation(bookingData, displayRange, formData)}
         // 2ND OPTION OF PASSING MULTI ARGS TO A FORMDATA
-        action={createReservationWithBookingData} //Server-action for creating a reservation with additional data passed onto this function
+        action={
+          // Create a custom callback including two step function calls
+          (formData) => {
+            // #1. Call manually with formData
+            createReservationWithBookingData(formData);
+            // #2. Reset date picker fields @ Context upon submission
+            handleDayPickerRangeReset();
+          }
+        } //Server-action for creating a reservation with additional data passed onto this function
         className="flex flex-col gap-5 bg-primary-900 px-16 py-10 text-lg"
       >
         <div className="space-y-2">
