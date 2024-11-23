@@ -75,7 +75,7 @@ export async function updateReservation(formData) {
   const bookingId = Number(formData.get("bookingId"));
 
   // GUARD CLAUSE - AUTHORIZATION - ANY MALICIOUS USER CAN UPDATE THE RESERVATIONS NOT BELONGING THEM. IN ORDER TO AVOID SUCH SCENARIO, THE BOOKINGID NEEDS TO BE THE RESERVATION OF THE USER AND ONLY THEN IT SHOULD BE UPDATED.
-  bookingAuthroizationCheck(session, bookingId, "update");
+  await bookingAuthroizationCheck(session, bookingId, "update");
 
   // MUTATE DATA
   const updatedData = {
@@ -113,7 +113,7 @@ export async function deleteReservation(bookingId) {
   if (!session) throw new Error("You must be logged in");
 
   // GUARD CLAUSE - AUTHORIZATION - ANY MALICIOUS USER CAN DELETE THE RESERVATIONS NOT BELONGIGN THEM. IN ORDER TO AVOID SUCH SCENARIO, THE BOOKINGID NEEDS TO BE THE RESERVATION OF THE USER AND ONLY THEN IT SHOULD BE DELETED.
-  bookingAuthroizationCheck(session, bookingId, "delete");
+  await bookingAuthroizationCheck(session, bookingId, "delete");
 
   const { error } = await supabase
     .from("bookings")

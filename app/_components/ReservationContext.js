@@ -12,10 +12,10 @@ function ReservationProvider({ children }) {
   const [displayRange, setDisplayRange] = useState(null);
   const [reminderCabin, setReminderCabin] = useState(null);
 
-  // RANGE LOGGER FOR DEVELOPEMENT
-  useEffect(() => {
-    console.log(range);
-  }, [range]);
+  // // RANGE LOGGER FOR DEVELOPEMENT
+  // useEffect(() => {
+  //   console.log(range);
+  // }, [range]);
 
   function handleReset(callback) {
     setRange(initialState);
