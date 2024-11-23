@@ -1,10 +1,12 @@
 // MAKE THIS CC AS WE WANT OT BRING IN DATA FROM A SIBLING CC
 "use client";
 
+import { formatISO, isValid } from "date-fns";
 import { useReservation } from "@/app/_components/ReservationContext";
 import { createReservation } from "@/app/_lib/server-actions";
 import { capitalize } from "@/app/_utility/capitalize";
 import { differenceInDays } from "@/node_modules/date-fns/differenceInDays";
+import SubmitButton from "@/app/_components/SubmitButton";
 
 function ReservationForm({ cabin, user }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
@@ -13,8 +15,27 @@ function ReservationForm({ cabin, user }) {
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   const { maxCapacity, regularPrice, discount, id } = cabin;
 
-  const startDate = range.from;
-  const endDate = range.to;
+  // > OPTION#1 - EITHER CHANGE THESE TO ISO DATES BEFORE SUBMITTING TO DB OR ...
+  const isValidStartDate = range.from && isValid(new Date(range.from));
+  const isValidEndDate = range.to && isValid(new Date(range.to));
+  const startDate = isValidStartDate
+    ? formatISO(new Date(range.from), { representation: "date" })
+    : null;
+  const endDate = isValidEndDate
+    ? formatISO(new Date(range.to), { representation: "date" })
+    : null;
+  // // > OPTION#2 - CONVERT LOCALHOURS TO UTC WITHOUT LIBRARY
+  // function setLocalHoursToUTCOffset(date) {
+  //   const offset = new Date().getTimezoneOffset();
+  //   const hours = Math.floor(Math.abs(offset) / 60);
+  //   const minutes = Math.abs(offset) % 60;
+  //   date?.setHours(hours, minutes);
+  //   return date;
+  // }
+  // const [startDate, endDate] = [
+  //   setLocalHoursToUTCOffset(range.from),
+  //   setLocalHoursToUTCOffset(range.to),
+  // ];
 
   const numNights = differenceInDays(endDate, startDate) + 1; // Be able to select one night
   const cabinPrice = numNights * (regularPrice - discount);
@@ -23,6 +44,7 @@ function ReservationForm({ cabin, user }) {
   /**
    * FIRST METHOD: CREATE HIDDEN FIELDS TO SUBMIT AS FORMDATA
    * SECOND METHOD: BIND THIS DATA TO SERVER ACTION FUNCTION
+   * THIRD METHOD: INSTEAD OF BINDING PROVIDE ADDITIONAL DATA RIGHT WHERE ACTION FUCNTION IS CALLED
    */
   const bookingData = {
     startDate,
@@ -55,6 +77,9 @@ function ReservationForm({ cabin, user }) {
 
       <form
         // action={createReservation} //Server-action for creating a reservation
+        // 3RD OPTION OF PASSING MULTI ARGS TO A FORMDATA
+        // action={(formData) => createReservation(bookingData, range, formData)}
+        // 2ND OPTION OF PASSING MULTI ARGS TO A FORMDATA
         action={createReservationWithBookingData} //Server-action for creating a reservation with additional data passed onto this function
         className="flex flex-col gap-5 bg-primary-900 px-16 py-10 text-lg"
       >
@@ -90,11 +115,35 @@ function ReservationForm({ cabin, user }) {
         </div>
 
         <div className="flex items-center justify-end gap-6">
-          <p className="text-base text-primary-300">Start by selecting dates</p>
+          <p className="text-base text-primary-300">
+            {!startDate && !endDate
+              ? "Start by selecting dates"
+              : startDate === endDate
+                ? `Only for ${new Intl.DateTimeFormat(undefined, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }).format(new Date(startDate))}`
+                : `${new Intl.DateTimeFormat(undefined, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }).format(new Date(startDate))} to ${new Intl.DateTimeFormat(
+                    undefined,
+                    {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    },
+                  ).format(new Date(endDate))}`}
+          </p>
 
-          <button className="bg-accent-500 px-8 py-4 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
+          <SubmitButton
+            className="bg-accent-500 px-8 py-4 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+            context="reserve"
+          >
             Reserve now
-          </button>
+          </SubmitButton>
         </div>
       </form>
     </div>

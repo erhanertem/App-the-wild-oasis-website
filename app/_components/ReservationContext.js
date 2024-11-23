@@ -11,6 +11,7 @@ function ReservationProvider({ children }) {
   const [range, setRange] = useState(initialState);
   const [reminderCabin, setReminderCabin] = useState(null);
 
+  // RANGE LOGGER FOR DEVELOPEMENT
   useEffect(() => {
     console.log(range);
   }, [range]);
@@ -24,6 +25,7 @@ function ReservationProvider({ children }) {
     <ReservationContext.Provider
       value={{
         // SHARED CONTEXT STATES & FUNCTIONS
+        initialState,
         range,
         setRange,
         reminderCabin,

@@ -11,10 +11,26 @@ function SubmitButton({ children, className, context, isPending }) {
     isPending = pending;
   }
 
+  let buttonText;
+  if (isPending) {
+    switch (context) {
+      case "update":
+        buttonText = "Updating...";
+        break;
+      case "reserve":
+        buttonText = "Reserving...";
+        break;
+      default:
+        throw new Error("Incorrect context input for submit button");
+    }
+  } else {
+    buttonText = children;
+  }
+
   return (
     <div>
       <button disabled={isPending} className={className}>
-        {context === "update" && isPending ? "Updating..." : children}
+        {buttonText}
       </button>
     </div>
   );

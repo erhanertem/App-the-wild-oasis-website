@@ -1,6 +1,7 @@
 // MAKE THIS CC AS WE ARE USING CLIENT-SIDE REACT-DAY-PICKER LIBRARY
 "use client";
 
+import { useEffect, useState } from "react";
 import { useReservation } from "@/app/_components/ReservationContext";
 import { isAlreadyBooked } from "@/app/_utility/isAlreadyBooked";
 import { differenceInDays } from "@/node_modules/date-fns/differenceInDays";
@@ -11,7 +12,8 @@ import "react-day-picker/src/style.css";
 
 function DateSelector({ settings, bookedDates, cabin }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
-  const { range, setRange, setReminderCabin, handleReset } = useReservation();
+  const { initialState, range, setRange, setReminderCabin, handleReset } =
+    useReservation();
 
   // GUARD CLAUSE - CHECK FOR RANGE SPAN OVERLAPPING WITH EXISTING BOOKED DATES
   // VERY IMPORTANT! NOTE THAT THIS IS CLIENT-SIDE CHECK, MEANING, ANY MALICIOUS ACTOR CAN EASILY HACK INTO CREATING AN OVERLLAPING DATE RESERVATION BY PLAYING AROUND WITH THE DISABLED PROPETY OF THE DAYPICKER COMPONENT - MEANING A SERVER-SIDE DATE OVERLLAPING CHECK HAS TO BE ALSO IMPLEMENTED BEFORE PROCEEDING WITH ANY MUTATION TO DB.
@@ -35,6 +37,26 @@ function DateSelector({ settings, bookedDates, cabin }) {
   function handleSelect(selectedRange) {
     setRange((prevs) => ({ ...prevs, ...selectedRange }));
   }
+
+  const [clickCount, setClickCount] = useState(1);
+
+  // RESET SELECTION UPON DOUBLE CLICK ON THE SAME DATE
+  useEffect(() => {
+    console.log(initialState);
+    // console.log(clickCount);
+    if (
+      range.to !== undefined &&
+      range.from !== undefined &&
+      String(range.from) === String(range.to) &&
+      clickCount === 0
+    ) {
+      // IF SAME DATE CLICKED TWICE RESET SELECTION
+      setRange(initialState);
+    } else {
+      // SET CLICK COUNT
+      setClickCount((clickCount) => (clickCount + 1) % 2);
+    }
+  }, [range]);
 
   return (
     <div className="flex flex-col justify-between">
@@ -90,7 +112,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {range.to !== undefined && range.from !== undefined ? (
           <button
             className="border border-primary-800 px-4 py-2 text-sm font-semibold"
             onClick={handleReset}

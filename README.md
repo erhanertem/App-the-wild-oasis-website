@@ -128,7 +128,8 @@
 
 - Greyout form fields while updating guest profile
 - Explore useActionState alternatingly for NextJS15 setups
-- Make a reusable and flexible form submit button that accepts or internally handles useFormStatus pendign state depending on the context.
+- Make a reusable and flexible form submit button that accepts or internally handles useFormStatus pending state depending on the provided context.
+- Create a interraction between booking and reservation submit form for visual acknowledgement
 
   &emsp;
 
