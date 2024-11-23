@@ -17,8 +17,8 @@ function DateSelector({ settings, bookedDates, cabin }) {
     range,
     setRange,
     setReminderCabin,
-    handleReset,
     setDisplayRange,
+    handleReset,
   } = useReservation();
 
   // GUARD CLAUSE - CHECK FOR RANGE SPAN OVERLAPPING WITH EXISTING BOOKED DATES
@@ -29,7 +29,6 @@ function DateSelector({ settings, bookedDates, cabin }) {
     ? initialState
     : range;
   // console.log("💣", displayRange);
-  setDisplayRange(displayRange);
 
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   // console.log(cabin);
@@ -41,8 +40,12 @@ function DateSelector({ settings, bookedDates, cabin }) {
   // SETTINGS
   const { minBookingLength, maxBookingLength } = settings;
 
-  // WRITE OFF CABIN DATA TO CONTEXT FOR CABIN REMINDER BORROW
-  setReminderCabin(cabin);
+  useEffect(() => {
+    // WRITE OFF DISPLAYRANGE TO CONTEXT FOR FORM TEXT CUSTOMIZATION
+    setDisplayRange(displayRange);
+    // WRITE OFF CABIN DATA TO CONTEXT FOR CABIN REMINDER BORROW
+    setReminderCabin(cabin);
+  }, [displayRange, cabin, setReminderCabin, setDisplayRange]);
 
   function handleSelect(selectedRange) {
     setRange((prevs) => ({ ...prevs, ...selectedRange }));
@@ -66,7 +69,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
       // SET CLICK COUNT
       setClickCount((clickCount) => (clickCount + 1) % 2);
     }
-  }, [range]);
+  }, [range, initialState, setRange]);
 
   return (
     <div className="flex flex-col justify-between">
@@ -125,7 +128,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
         {range.to !== undefined && range.from !== undefined ? (
           <button
             className="border border-primary-800 px-4 py-2 text-sm font-semibold"
-            onClick={handleReset}
+            onClick={() => handleReset(() => setClickCount(0))}
           >
             Clear
           </button>
