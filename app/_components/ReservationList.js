@@ -25,7 +25,7 @@ function ReservationList({ bookings }) {
   }
 
   return (
-    <ul className="space-y-6">
+    <ul className="scrollbar-gutter-stable space-y-6 overflow-auto">
       {/* {bookings.map((booking) => ( */}
       {/* In optimistic updates bookings gets replaces with optimisticBookings state since initial optimistic bookings state is assigned 'bookings' */}
       {optimisticBookings.map((booking) => (

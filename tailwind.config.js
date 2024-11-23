@@ -37,5 +37,13 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        ".scrollbar-gutter-stable": {
+          "scrollbar-gutter": "stable both-edges",
+        },
+      });
+    },
+  ],
 };
