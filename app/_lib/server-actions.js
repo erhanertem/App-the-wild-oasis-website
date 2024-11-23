@@ -63,6 +63,9 @@ export async function createReservation(
   // REVALIDATE STALE CACHE
   // REVALIDATE @ STATIC ROUTE
   revalidatePath(`/cabins/${bookingData.cabinId}`);
+
+  // REDIRECT TO...
+  redirect("/cabins/thankyou");
 }
 
 export async function updateReservation(formData) {
