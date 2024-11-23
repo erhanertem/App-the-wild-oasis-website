@@ -3,7 +3,13 @@
 import { useFormStatus } from "react-dom";
 
 // NOTE: BY ACCEPTING ISPENDIGN AS ARG, WE EXTEND THE USE OF IT TO WRAPPER COMPONENTS WHERE THEY DO UTILIZE USEFORMSTATUS PRIOR OR IMPLEMENT HERE FOR THE FIRST TIME IF NOT ELSEWHERE.
-function SubmitButton({ children, className, context, isPending }) {
+function SubmitButton({
+  children,
+  className,
+  context,
+  isPending,
+  isLackingDayPick,
+}) {
   //  GET ACCESS TO FORM PENDING STATE
   // IMPORTANT! useFormStatus react hook from 'react-dom' needs to be used inside a component which is part of this form body. So we have created Button hosting this react-dom hook and place it inside our form.
   if (!isPending) {
@@ -27,9 +33,14 @@ function SubmitButton({ children, className, context, isPending }) {
     buttonText = children;
   }
 
+  // GUARD CLAUSE - Handle cases where no day is picked
+  if (isLackingDayPick) {
+    return null; // Do not render anything if `isLackingDayPick` is true
+  }
+
   return (
     <div>
-      <button disabled={isPending} className={className}>
+      <button disabled={isPending || isLackingDayPick} className={className}>
         {buttonText}
       </button>
     </div>

@@ -129,7 +129,11 @@
 - Greyout form fields while updating guest profile
 - Explore useActionState alternatingly for NextJS15 setups
 - Make a reusable and flexible form submit button that accepts or internally handles useFormStatus pending state depending on the provided context.
-- Create a interraction between booking and reservation submit form for visual acknowledgement
+- Exchange states between daypicker booking and reservation submit form for enhanced visual acknowledgement
+- Disallow for submission w/out day picker
+- Establish a single day booking
+- Booking day picker cancle w/ double click on the same spot
+- Provide Tailwind function directive to keep spacing put when browser scroll on/off @ reservation list
 
   &emsp;
 

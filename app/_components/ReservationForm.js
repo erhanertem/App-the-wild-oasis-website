@@ -63,6 +63,8 @@ function ReservationForm({ cabin, user }) {
     setRange(initialState);
   };
 
+  const isLackingDayPick = !isValidStartDate && !isValidEndDate;
+
   return (
     <div className="scale-[1.01]">
       <div className="flex items-center justify-between bg-primary-800 px-16 py-2 text-primary-300">
@@ -153,6 +155,7 @@ function ReservationForm({ cabin, user }) {
           <SubmitButton
             className="bg-accent-500 px-8 py-4 font-semibold text-primary-800 transition-all hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
             context="reserve"
+            isLackingDayPick={isLackingDayPick}
           >
             Reserve now
           </SubmitButton>
