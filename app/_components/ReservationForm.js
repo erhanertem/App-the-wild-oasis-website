@@ -10,19 +10,20 @@ import SubmitButton from "@/app/_components/SubmitButton";
 
 function ReservationForm({ cabin, user }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
-  const { range } = useReservation();
+  const { displayRange } = useReservation();
 
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   const { maxCapacity, regularPrice, discount, id } = cabin;
 
   // > OPTION#1 - EITHER CHANGE THESE TO ISO DATES BEFORE SUBMITTING TO DB OR ...
-  const isValidStartDate = range.from && isValid(new Date(range.from));
-  const isValidEndDate = range.to && isValid(new Date(range.to));
+  const isValidStartDate =
+    displayRange?.from && isValid(new Date(displayRange.from));
+  const isValidEndDate = displayRange?.to && isValid(new Date(displayRange.to));
   const startDate = isValidStartDate
-    ? formatISO(new Date(range.from), { representation: "date" })
+    ? formatISO(new Date(displayRange?.from), { representation: "date" })
     : null;
   const endDate = isValidEndDate
-    ? formatISO(new Date(range.to), { representation: "date" })
+    ? formatISO(new Date(displayRange?.to), { representation: "date" })
     : null;
   // // > OPTION#2 - CONVERT LOCALHOURS TO UTC WITHOUT LIBRARY
   // function setLocalHoursToUTCOffset(date) {
@@ -33,8 +34,8 @@ function ReservationForm({ cabin, user }) {
   //   return date;
   // }
   // const [startDate, endDate] = [
-  //   setLocalHoursToUTCOffset(range.from),
-  //   setLocalHoursToUTCOffset(range.to),
+  //   setLocalHoursToUTCOffset(displayRange.from),
+  //   setLocalHoursToUTCOffset(displayRange.to),
   // ];
 
   const numNights = differenceInDays(endDate, startDate) + 1; // Be able to select one night
@@ -56,7 +57,7 @@ function ReservationForm({ cabin, user }) {
   const createReservationWithBookingData = createReservation.bind(
     null,
     bookingData,
-    range, // Data for checking server-side overllaping reservation re-validation
+    displayRange, // Data for checking server-side overllaping reservation re-validation
   );
 
   return (
@@ -78,7 +79,7 @@ function ReservationForm({ cabin, user }) {
       <form
         // action={createReservation} //Server-action for creating a reservation
         // 3RD OPTION OF PASSING MULTI ARGS TO A FORMDATA
-        // action={(formData) => createReservation(bookingData, range, formData)}
+        // action={(formData) => createReservation(bookingData, displayRange, formData)}
         // 2ND OPTION OF PASSING MULTI ARGS TO A FORMDATA
         action={createReservationWithBookingData} //Server-action for creating a reservation with additional data passed onto this function
         className="flex flex-col gap-5 bg-primary-900 px-16 py-10 text-lg"
@@ -116,9 +117,9 @@ function ReservationForm({ cabin, user }) {
 
         <div className="flex items-center justify-end gap-6">
           <p className="text-base text-primary-300">
-            {!startDate && !endDate
+            {displayRange?.to === undefined || displayRange?.from === undefined
               ? "Start by selecting dates"
-              : startDate === endDate
+              : String(displayRange.to) === String(displayRange.from)
                 ? `Only for ${new Intl.DateTimeFormat(undefined, {
                     year: "numeric",
                     month: "short",

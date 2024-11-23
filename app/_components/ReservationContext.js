@@ -9,12 +9,13 @@ const initialState = { from: undefined, to: undefined };
 function ReservationProvider({ children }) {
   // CONTEXT STATES & FUNCTIONS
   const [range, setRange] = useState(initialState);
+  const [displayRange, setDisplayRange] = useState(null);
   const [reminderCabin, setReminderCabin] = useState(null);
 
-  // RANGE LOGGER FOR DEVELOPEMENT
-  useEffect(() => {
-    console.log(range);
-  }, [range]);
+  // // RANGE LOGGER FOR DEVELOPEMENT
+  // useEffect(() => {
+  //   console.log(range);
+  // }, [range]);
 
   function handleReset() {
     setRange(initialState);
@@ -28,6 +29,8 @@ function ReservationProvider({ children }) {
         initialState,
         range,
         setRange,
+        displayRange,
+        setDisplayRange,
         reminderCabin,
         setReminderCabin,
         handleReset,

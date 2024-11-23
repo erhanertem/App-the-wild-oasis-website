@@ -12,14 +12,24 @@ import "react-day-picker/src/style.css";
 
 function DateSelector({ settings, bookedDates, cabin }) {
   // PROVIDE CONTEXT API SERVED STATE/FUNCTIONS
-  const { initialState, range, setRange, setReminderCabin, handleReset } =
-    useReservation();
+  const {
+    initialState,
+    range,
+    setRange,
+    setReminderCabin,
+    handleReset,
+    setDisplayRange,
+  } = useReservation();
 
   // GUARD CLAUSE - CHECK FOR RANGE SPAN OVERLAPPING WITH EXISTING BOOKED DATES
   // VERY IMPORTANT! NOTE THAT THIS IS CLIENT-SIDE CHECK, MEANING, ANY MALICIOUS ACTOR CAN EASILY HACK INTO CREATING AN OVERLLAPING DATE RESERVATION BY PLAYING AROUND WITH THE DISABLED PROPETY OF THE DAYPICKER COMPONENT - MEANING A SERVER-SIDE DATE OVERLLAPING CHECK HAS TO BE ALSO IMPLEMENTED BEFORE PROCEEDING WITH ANY MUTATION TO DB.
   // // > TEST: SIMULATE MALICIOUS ACTOR ATTEMPT
   // const displayRange = range;
-  const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
+  const displayRange = isAlreadyBooked(range, bookedDates)
+    ? initialState
+    : range;
+  // console.log("💣", displayRange);
+  setDisplayRange(displayRange);
 
   // CHANGE - DATA NEEDS OT BE FETCHED FROM CABIN DATA
   // console.log(cabin);
@@ -42,7 +52,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
 
   // RESET SELECTION UPON DOUBLE CLICK ON THE SAME DATE
   useEffect(() => {
-    console.log(initialState);
+    // console.log(initialState);
     // console.log(clickCount);
     if (
       range.to !== undefined &&
