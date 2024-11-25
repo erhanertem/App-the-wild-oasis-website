@@ -139,9 +139,9 @@
 
 <img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/report.gif" width="30px"/><strong>Pending Issues:</strong>
 
-- N/A
+- Cache revalidation is buggy affecting only SC component in NextJS v15.0.3(current)
 
-#### <img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/file.gif" width="30px"/>[The Wild Oasis Website](https://website-wild-oasis-erhan-ertem.netlify.app)
+#### <img src="https://raw.githubusercontent.com/erhanertem/erhanertem/main/icons/file.gif" width="30px"/>[The Wild Oasis Website](https://website-wild-oasis-erhan-ertem.vercel.app/)
 
 <img src="./screenshot.webp" width="600px"/>
 
